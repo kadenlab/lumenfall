@@ -19,6 +19,7 @@ export type ChapterContext={
 export type MapConfig={id:number;name:string;eyebrow:string;description:string;night:boolean;spawn:{x:number;z:number};load:()=>Promise<{build:(ctx:ChapterContext)=>void}>};
 export type EnemyConfig={hp:number;attack:number;xp:number;gold:number;boss?:boolean;fireBonus?:number;intro?:string;eyebrow?:string;phaseAttack?:number;chargeAttack?:number;chargeText?:string;chargeName?:string;phaseText?:string};
 export type Chapter={
+ combat?:{damage:(ctx:ChapterContext,id:string,turn:number,command:string,base:number)=>number;enemyAttack:(ctx:ChapterContext,id:string,turn:number,command:string,base:number)=>number;status:(ctx:ChapterContext,id:string,turn:number)=>string;onCommand?:(ctx:ChapterContext,id:string,turn:number,command:string)=>void};
  paintSprite:(kind:string,rect:(x:number,y:number,w:number,h:number,color:string)=>void)=>boolean;id:string;title:string;unlockNext:string[];maps:MapConfig[];enemies:Record<string,EnemyConfig>;
  start:{area:number;x:number;z:number};returnTo:{area:number;x:number;z:number};respawn:{area:number;x:number;z:number};
  entry:(area:number,from:number)=>{x:number;z:number};initialize:(s:GameState)=>void;normalize:(s:GameState)=>void;height:(s:GameState,x:number,z:number)=>number;

@@ -1,12 +1,7 @@
-# 配布ファイル
+# Chapter 2配布
 
-- lumenfall-optimized.zip：完全版。解凍直下がリポジトリルートです。通常はこちらで更新してください。
-- lumenfall-changed-files.zip：以前の lumenfall-github.zip に対する追加・変更ファイル。取りこぼしを防ぐため公開用docsは一式含めています。古いハッシュ名のJS/CSSが残っても新indexからは参照しません。
+`lumenfall-chapter2.zip` はChapter 1と2を含む完全版です。展開直下がリポジトリルートになります。最新のビルド済みdocs、ソース、テスト、package-lock.jsonを含みます。node_modules、.git、キャッシュ、検証専用ページは含みません。
 
-どちらも最新版のビルド済みdocs、package-lock.jsonを含みます。node_modules、.git、キャッシュ、検証専用ページは含みません。既存のCNAMEや独自設定は保持してください。
+GitHubでは展開した中身を既存ルートへ上書きし、コミットしてください。Pagesのmain /docs設定はそのままです。既存CNAMEなど独自設定は残してください。
 
-主要変更：app/game.ts、app/performance.ts、app/dungeon.ts、app/chapters/、app/systems/、tests/chapters.test.mjs、tests/performance.test.mjs、package.json、package-lock.json、scripts/build.mjs、README.md、docs-dev/、docs/。
-
-開発元のホスト用app/page.tsx、tsconfig.json、scripts/build-static.mjs、scripts/export-github.mjsも非同期起動と配布生成に対応しています。GitHub配布版はstandaloneを入口にするため、ホスト固有のファイルは不要です。
-
-章の追加手順はCHAPTERS.md、最適化の詳細と確認限界はOPTIMIZATION.md、実プレイ記録はQA.mdを参照してください。
+追加内容はCHAPTER-2.md、検証結果はCHAPTER-2-QA.mdを参照してください。QA.mdとOPTIMIZATION.mdは前回の最適化時の記録です。

@@ -1,11 +1,15 @@
 # 灯の継承者 — Lumenfall
 
-ドット絵キャラクターと立体背景で描く、約15分のオリジナル短編ファンタジーRPG。
-町 → 琥珀の丘 → 双灯の遺跡 → ボス → エンディングまで遊べます。
+ドット絵キャラクターと立体背景で描く、オリジナル短編ファンタジーRPG（Chapter 1・2）。
+Chapter 1の町・丘・遺跡に加え、Chapter 2の霧港・桟橋・沈んだ礼拝堂・聖歌廊まで遊べます。
+
+## Chapter 2への出発
+
+Chapter 1をクリアし、クリア画面または町の「Chapter 2 · 霧の港へ」を選んでください。クリア済みの方は「つづきから」で出発できます。冒険メニューの「チャプターの記録」から章を行き来できます。Chapter 2の内容・攻略・変更点は [Chapter 2ガイド](docs-dev/CHAPTER-2.md) を参照してください。
 
 ## 既存リポジトリの更新
 
-`lumenfall-optimized.zip` を解凍し、中の app / docs / scripts / standalone / tests / docs-dev と各ファイルを、既存リポジトリの直下へ上書きしてください。ZIP自体はアップロードしません。Pagesの main /docs 設定はそのままです。既存のCNAMEなど独自設定があれば残してください。
+`lumenfall-chapter2.zip` を解凍し、中の app / docs / scripts / standalone / tests / docs-dev と各ファイルを、既存リポジトリの直下へ上書きしてください。ZIP自体はアップロードしません。Pagesの main /docs 設定はそのままです。既存のCNAMEなど独自設定があれば残してください。
 
 今回の `docs/` はビルド済みです。更新だけならNode.jsやビルド操作は不要です。開発時は下記の手順を使います。
 
