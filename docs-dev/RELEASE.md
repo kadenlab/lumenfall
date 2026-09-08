@@ -1,3 +1,9 @@
+# 灯の試練 表示・難易度修正版（1.3.1）
+
+配布物：`lumenfall-trials-adjusted.zip`。Chapter 1・2・灯の試練を収録。Chapter 3は含まない。展開した中身をGitHubリポジトリ直下に上書きし、Pagesのmain /docs設定を維持する。セーブ削除不要。
+
+変更ファイル：app/game.ts、app/globals.css、app/trials/chapter.ts・presentation.ts・rules.ts・ui.ts、tests/trials.test.mjs、scripts/export-github.mjs、説明書と最新docs/。
+
 # 灯の試練 Ver.1 公開更新
 
 最新配布物は `lumenfall-trials.zip` です。Chapter 1・2と灯の試練をすべて含みます。展開した中身をリポジトリ直下へ上書きし、Pagesのmain /docs設定を維持してください。

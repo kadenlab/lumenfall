@@ -19,6 +19,7 @@ test('mist reveal lasts three subsequent command selections; unavailable command
 test('no-heal blocks all recovery and preserves HP across three waves',()=>{const s=ready(),r=createRun(4);for(const cmd of ['heal','potion','ether'])assert.equal(allowed(r,cmd),false);s.hp=140;resolveTurn(r,s,'attack',999,()=>1);assert.equal(r.wave,2);assert.equal(s.hp,140);resolveTurn(r,s,'attack',999,()=>1);resolveTurn(r,s,'attack',999,()=>1);assert.equal(r.result,'win');assert.equal(s.hp,140);});
 function play(id){const s=ready(),r=createRun(id);s.potions=4;s.ethers=3;let safety=0;while(r.result==='active'&&safety++<100){let cmd='fire';if(id===1){const lamp=r.foes.findIndex(f=>f.hp>0&&f.target!=='hero');if(lamp>=0)r.target=lamp}
  if(id===2)cmd=s.hp<80?'potion':'guard';
+ if(id===4&&(r.turn+1)%3===0)cmd='guard';
  if(id===3&&((r.turn+1)%3===0))cmd='guard';
  if(id===5){if((r.turn+1)%3===0)cmd='protect';else if(s.hp<65)cmd=s.potions?'potion':'heal';else if(r.lamp<=45&&r.shards)cmd='shard';}
  if(cmd==='heal'&&s.mp<5)cmd='ether';if(cmd==='fire'&&s.mp<6)cmd=id===4?'attack':'ether';if(cmd==='potion'&&!s.potions)cmd='heal';
@@ -26,3 +27,8 @@ function play(id){const s=ready(),r=createRun(id);s.potions=4;s.ethers=3;let saf
  const d=cmd==='fire'?81:cmd==='attack'?49:0;resolveTurn(r,s,cmd,d,()=>1);
  }return {r,s}}
 for(let id=1;id<=5;id++)test('trial '+id+' is winnable at Chapter 2 clear level without random evasion',()=>{const {r,s}=play(id);assert.equal(r.result,'win',JSON.stringify({id,turn:r.turn,hp:s.hp,lamp:r.lamp}));if(id===2)assert.equal(r.turn,15);});
+
+test('defeated enemies disappear from trial HP text and target commands',async()=>{const {trialStatus}=await import('../app/trials/ui.ts');const r=createRun(2),s=ready();resolveTurn(r,s,'fire',999,()=>1);const html=trialStatus(r,(_id,label)=>label,false);assert.ok(!html.includes('残響の兵'));assert.ok(html.includes('残響の弓手'));for(let i=0;i<3;i++)resolveTurn(r,s,'guard',0,()=>1);assert.ok(trialStatus(r,(_id,label)=>label,false).includes('増援の影'));});
+test('fourth trial replaces each defeated foe without retaining its HP or name',async()=>{const {trialStatus}=await import('../app/trials/ui.ts');const r=createRun(4),s=ready();s.hp=140;for(const [oldName,newName] of [['傷なき影','乾いた守衛'],['乾いた守衛','無癒の番獣']]){resolveTurn(r,s,'fire',999,()=>1);const html=trialStatus(r,(_id,label)=>label,false);assert.ok(!html.includes(oldName));assert.ok(html.includes(newName));assert.equal(s.hp,140)}resolveTurn(r,s,'fire',999,()=>1);assert.equal(r.result,'win')});
+
+test('fourth trial punishes sword spam but telegraphed guarding is survivable',()=>{const r=createRun(4),s=ready();while(r.result==='active'&&r.turn<50)resolveTurn(r,s,'attack',49,()=>1);assert.equal(r.result,'lose');const a=createRun(4),b=createRun(4);a.turn=b.turn=2;const sa=ready(),sb=ready();resolveTurn(a,sa,'attack',0,()=>1);resolveTurn(b,sb,'guard',0,()=>1);assert.ok(sb.hp>sa.hp);assert.equal(play(4).r.result,'win')});
