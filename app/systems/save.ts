@@ -1,3 +1,4 @@
+import {migrateTrials,maxHealth} from '../trials/state.ts';
 import {fresh} from './state.ts';
 import type {GameState} from './state.ts';
 import {migrateV1} from '../chapters/chapter-1/migrate.ts';
@@ -15,7 +16,7 @@ export function decode(raw:string):GameState{
  const c=s.campaign;if(typeof c.currentChapter!=='string'||!Array.isArray(c.completedChapters)||!Array.isArray(c.unlockedChapters)||!validObject(c.chapters)||!c.chapters[c.currentChapter])throw Error('チャプター記録が破損しています');
  for(const p of Object.values(c.chapters)){if(!validObject(p)||!validObject(p.flags)||!validObject(p.quests)||!['bosses','defeatedEnemies','chests','unlockedAreas'].every(k=>Array.isArray((p as any)[k])))throw Error('進行記録が破損しています')}
  for(const key of ['area','x','z','hp','mp','lv','xp','gold','potions','ethers','time'] as const)if(!Number.isFinite(s[key]))throw Error('ステータスの記録が破損しています');
- s.lv=Math.max(1,Math.min(999,Math.floor(s.lv)));s.hp=Math.max(1,Math.min(100+(s.lv-1)*24,s.hp));s.mp=Math.max(0,Math.min(30+(s.lv-1)*8,s.mp));
+ migrateTrials(s);s.lv=Math.max(1,Math.min(999,Math.floor(s.lv)));s.hp=Math.max(1,Math.min(maxHealth(s),s.hp));s.mp=Math.max(0,Math.min(30+(s.lv-1)*8,s.mp));
  for(const k of ['xp','gold','potions','ethers'] as const)s[k]=Math.max(0,Math.floor(s[k]));s.x=Math.max(-21,Math.min(21,s.x));s.z=Math.max(-21,Math.min(21,s.z));s.sword=!!s.sword;s.armor=!!s.armor;return s;
 }
 export function readSave(storage:Pick<Storage,'getItem'>){const raw=storage.getItem(SAVE_KEY)??storage.getItem(LEGACY_KEY);if(!raw)throw Error('読み込める記録がありません');return decode(raw)}

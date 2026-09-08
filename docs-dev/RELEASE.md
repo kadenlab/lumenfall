@@ -1,3 +1,13 @@
+# 灯の試練 Ver.1 公開更新
+
+最新配布物は `lumenfall-trials.zip` です。Chapter 1・2と灯の試練をすべて含みます。展開した中身をリポジトリ直下へ上書きし、Pagesのmain /docs設定を維持してください。
+
+更新内容は [TRIALS.md](TRIALS.md)、今回の検証記録は [TRIALS-QA.md](TRIALS-QA.md) を参照してください。
+
+以下はChapter 2公開時の記録です。
+
+---
+
 # Chapter 2配布
 
 `lumenfall-chapter2.zip` はChapter 1と2を含む完全版です。展開直下がリポジトリルートになります。最新のビルド済みdocs、ソース、テスト、package-lock.jsonを含みます。node_modules、.git、キャッシュ、検証専用ページは含みません。
