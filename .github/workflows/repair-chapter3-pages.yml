@@ -1,0 +1,74 @@
+name: Repair Chapter 3 Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/repair-chapter3-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Sync Chapter 3 source into app
+        shell: bash
+        run: |
+          rm -rf app/chapters app/systems app/trials
+          cp -R chapters app/chapters
+          cp -R systems app/systems
+          cp -R trials app/trials
+          cp game.ts app/game.ts
+
+          # Chapter 3 test was uploaded at repo root.
+          # Move a copy into tests/ so npm test actually runs it.
+          cp chapter3.test.mjs tests/chapter3.test.mjs
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build GitHub Pages
+        run: npm run build
+
+      - name: Verify Chapter 3 is in the production build
+        shell: bash
+        run: |
+          grep -q "Chapter 1〜3" docs/index.html
+          grep -R -q "chapter-3" docs/assets
+
+      - name: Commit repaired source and production build
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            app/chapters \
+            app/systems \
+            app/trials \
+            app/game.ts \
+            tests/chapter3.test.mjs \
+            docs
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Fix Chapter 3 source and GitHub Pages build"
+            git push
+          fi
