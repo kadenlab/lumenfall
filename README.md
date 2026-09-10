@@ -1,23 +1,17 @@
-# 灯の試練 修正版（2026-09-08）
-
-`lumenfall-trials-adjusted.zip` の中身をリポジトリ直下へ上書きしてください。最新の `docs/` を含み、GitHub Pagesは従来どおり main /docs で公開できます。Chapter 3はまだ含みません。
-
-敵の出現・撃破・選択状態を明確化し、第四の試練に予告付き強攻撃を追加しました。既存セーブの削除は不要です。詳細は `docs-dev/TRIALS.md` と `docs-dev/TRIALS-QA.md` を参照。
-
-# Lumenfall — Chapter 1・2 ＋ 灯の試練
-
-この更新には、Chapter 2クリア後の「灯の試練」全5戦とアクセサリー2枠を含みます。既存のクリア済みセーブは「つづきから」で自動解放され、やり直し不要です。冒険メニューから挑戦してください。
-
-試練の内容・報酬・セーブ互換・追加コードは [灯の試練ガイド](docs-dev/TRIALS.md) を参照してください。
-
-ZIPの中身をGitHubリポジトリ直下へ上書きし、Pagesの公開元はmain /docsを維持してください。最新ビルド済みdocsを含みます。
-
----
-
 # 灯の継承者 — Lumenfall
 
-ドット絵キャラクターと立体背景で描く、オリジナル短編ファンタジーRPG（Chapter 1・2）。
-Chapter 1の町・丘・遺跡に加え、Chapter 2の霧港・桟橋・沈んだ礼拝堂・聖歌廊まで遊べます。
+ドット絵キャラクターと立体背景で描く、オリジナル短編ファンタジーRPG（Chapter 1・2・3＋灯の試練）。
+Chapter 1の町・丘・遺跡に加え、Chapter 2の霧港・礼拝堂、Chapter 3の雪原・集落・旧都・地下聖堂まで遊べます。
+
+## Chapter 3「雪に閉ざされた灯」（1.4.0）
+
+Chapter 2クリア後、冒険メニュー → **チャプターの記録 → Chapter 3** を選びます。更新前にChapter 2をクリアした記録も「つづきから」で自動解放します。セーブ削除や再クリアは不要です。灯の試練は必須ではありません。
+
+白霧の雪原 → 凍灯の集落 → 凍れる番人 → 凍れる旧都 → 凍灯聖堂 → 氷葬の灯守 → 大灯復活 → Chapter 3 Complete。ミナの「次は雪の山」を直接引き継ぐ本編です。
+
+既存の5試練（敵表示・第四試練調整版）とアクセサリー2枠を収録。永灯の首飾りは従来どおり毎ターン開始時3%回復です。
+
+[Chapter 3の内容と開発ガイド](docs-dev/CHAPTER3.md) · [検証結果と限界](docs-dev/CHAPTER3-QA.md) · [灯の試練](docs-dev/TRIALS.md)
 
 ## Chapter 2への出発
 
@@ -25,7 +19,7 @@ Chapter 1をクリアし、クリア画面または町の「Chapter 2 · 霧の�
 
 ## 既存リポジトリの更新
 
-`lumenfall-chapter2.zip` を解凍し、中の app / docs / scripts / standalone / tests / docs-dev と各ファイルを、既存リポジトリの直下へ上書きしてください。ZIP自体はアップロードしません。Pagesの main /docs 設定はそのままです。既存のCNAMEなど独自設定があれば残してください。
+`lumenfall-chapter3.zip` を解凍し、中の app / docs / scripts / standalone / tests / docs-dev と各ファイルを、既存リポジトリの直下へ上書きしてください。ZIP自体はアップロードしません。Pagesの main /docs 設定はそのままです。既存のCNAMEなど独自設定があれば残してください。
 
 今回の `docs/` はビルド済みです。更新だけならNode.jsやビルド操作は不要です。開発時は下記の手順を使います。
 
@@ -89,7 +83,7 @@ Chapter 1をクリアし、クリア画面または町の「Chapter 2 · 霧の�
 Node.js 22.18以降が必要です。
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 
