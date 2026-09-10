@@ -72,3 +72,5 @@ jobs:
             git commit -m "Fix Chapter 3 source and GitHub Pages build"
             git push
           fi
+          # rerun after test fix
+# rer
