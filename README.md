@@ -65,7 +65,3 @@ Chapter 1の内容は `app/chapters/chapter-1/`、共通処理は `app/game.ts`�
 npm test
 npm run build
 ```
-
-変更後は更新された `docs/` もコミットしてください。GitHub Pagesはそのビルド済みファイルを配信します。HTMLをダブルクリックしての起動は想定していません。
-
-WebGLが利用できない環境では簡易描画に切り替わり、反射・影・発光などの表現が制限されます。フォントはGoogle Fontsから取得し、利用できない場合は端末のフォントに切り替わります。
