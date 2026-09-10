@@ -1,0 +1,26 @@
+import * as T from 'three';
+import type {ChapterContext} from '../../types.ts';
+import {floors} from '../terrain.ts';
+import {flags,won} from '../state.ts';
+import {place,placements} from '../object-config.ts';
+export function materials(c:ChapterContext){return {snow:c.mat('#c7dae1',.83),stone:c.mat('#52677b',.76),dark:c.mat('#25364b',.8),ice:new T.MeshStandardMaterial({color:'#91c9dc',metalness:.36,roughness:.2,emissive:'#285b7a',emissiveIntensity:.2}),wood:c.mat('#4e5361'),gold:c.mat('#b69b70')}}
+export function foundation(c:ChapterContext){const a=c.state.area,thaw=!!flags(c.state).rekindled,deep=a>=3;
+ c.scene.background=new T.Color(deep?'#071421':thaw?'#576d87':'#263e59');c.scene.fog=new T.FogExp2(deep?'#1f364b':thaw?'#829eaf':'#819eaf',deep?.022:thaw?.013:a===0?.029:.02);
+ c.ambient.color.set('#c6e5fc');c.ambient.groundColor.set('#344559');c.ambient.intensity=deep?1.7:2;c.sun.color.set(thaw?'#ffe1b7':'#b1daff');c.sun.intensity=deep?2.3:3;c.sun.position.set(-17,26,-12);c.scene.userData.fillLift=1.12;
+ const m=materials(c);c.box(0,-4,0,48,2,48,m.dark);
+ for(const r of floors[a]){const rows=a===2||a===3?Math.ceil(r.d/2):1;for(let i=0;i<rows;i++){const z=r.z-r.d/2+(i+.5)*r.d/rows,y=c.height(r.x,z);c.box(r.x,y-.45,z,r.w,.88,r.d/rows+.03,m.stone);c.box(r.x,y+.015,z,r.w,.055,r.d/rows+.03,deep?m.ice:m.snow)}}
+ if(a<2)for(let z=-17;z<=18;z+=2)c.box(Math.sin(z*.13)*1.5,.05,z,4.4,.03,1.6,m.stone,false);
+ // A single snow draw call; near/mid/far depths share shader motion and the existing clock.
+ const n=c.mobile?110:220,positions=new Float32Array(n*3);for(let i=0;i<n;i++){positions[i*3]=c.rand(i+130)*46-23;positions[i*3+1]=c.rand(i+291)*14;positions[i*3+2]=c.rand(i+623)*48-24}
+ const geometry=new T.BufferGeometry();geometry.setAttribute('position',new T.BufferAttribute(positions,3));const strength={value:thaw?.3:deep?.45:1};c.world.userData.snowStrength=strength;
+ const snow=new T.PointsMaterial({color:'#e6f6ff',size:deep?.055:.085,transparent:true,opacity:thaw?.35:.72,depthWrite:false});snow.onBeforeCompile=shader=>{shader.uniforms.uClock=c.animationTime;shader.uniforms.uSnow=strength;shader.vertexShader='uniform float uClock; uniform float uSnow;\n'+shader.vertexShader;shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\ntransformed.y=mod(position.y-uClock*(.9+uSnow),14.); transformed.x=mod(position.x+24.+uClock*uSnow*1.4,48.)-24.; transformed.z+=sin(uClock*.8+position.x)*.35;')};const points=new T.Points(geometry,snow);points.frustumCulled=false;c.world.add(points);
+ // Finite fog wisps: no additional lights, textures, reflection scenes or per-frame allocations.
+ if(!thaw){const fogMat=new T.MeshBasicMaterial({color:'#101724',transparent:true,opacity:.35,depthWrite:false,side:T.DoubleSide});c.world.userData.blackFog=fogMat;for(let i=0;i<5;i++){const x=(i%2?1:-1)*(5+i*1.6),z=10-i*6;const g=c.box(x,c.height(x,z)+.15,z,3.7,.16,1.5,fogMat,false);g.rotation.y=i*.7}}
+ return m;
+}
+export function lantern(c:ChapterContext,x:number,z:number,lit=true,warm=false){const y=c.height(x,z),m=materials(c);c.cyl(x,y+.6,z,.13,1.2,m.dark);c.box(x,y+1.4,z,.65,.8,.65,m.stone);const color=warm?'#ffd19b':'#a9e8ff';const glow=new T.MeshStandardMaterial({color:lit?color:'#38516a',emissive:color,emissiveIntensity:lit?2:0,roughness:.3});const glass=c.box(x,y+1.43,z,.53,.54,.7,glow,false);glass.userData.dynamic=true;c.box(x,y+1.89,z,.95,.16,.95,m.snow);if(lit)c.light(x,y+1.5,z,color,7);return glow}
+export function pillar(c:ChapterContext,x:number,z:number,h=5){const m=materials(c),y=c.height(x,z);c.box(x,y+.25,z,1.8,.5,1.8,m.stone);c.cyl(x,y+h/2,z,.48,h,m.stone);c.box(x,y+h,z,1.4,.3,1.4,m.snow);c.blocks.push({x,z,w:1.4,d:1.4})}
+export function house(c:ChapterContext,x:number,z:number,w:number,h:number,lit=false){const m=materials(c),y=c.height(x,z);c.box(x,y+h/2,z,w,h,4.8,m.stone);for(const side of [-1,1]){const roof=c.box(x+side*w*.25,y+h+.7,z,w*.64,.3,5.8,m.snow);roof.rotation.z=side*-.38}c.box(x,y+.75,z+2.45,.85,1.5,.08,m.dark);const glow=new T.MeshStandardMaterial({color:lit?'#ffe0ad':'#53788f',emissive:lit?'#ffae62':'#274458',emissiveIntensity:lit?1.7:.12,roughness:.22});for(const side of [-1,1]){c.box(x+side*w*.3,y+h*.58,z+2.44,.8,1,.06,glow,false);c.box(x+side*w*.3,y+h*.58,z+2.5,.07,1.1,.06,m.wood)}if(lit)c.light(x,y+1.8,z+3,'#ffd49a',8);c.box(x+w*.32,y+.24,z+2.8,w*.42,.55,.8,m.snow);c.blocks.push({x,z,w:w+.2,d:5.1})}
+export function pine(c:ChapterContext,x:number,z:number,size=1){const m=materials(c);c.cyl(x,1.4*size,z,.17,2.8*size,m.wood);for(let i=0;i<3;i++){const t=new T.Mesh(new T.ConeGeometry((1.3-i*.28)*size,2.1*size,5),i%2?m.ice:m.snow);t.position.set(x,(2.4+i*.85)*size,z);t.castShadow=true;c.world.add(t)}c.blocks.push({x,z,w:.65,d:.65})}
+export function arch(c:ChapterContext,z:number,w=9,h=6){const m=materials(c),y=c.height(0,z);for(const x of [-w/2,w/2]){c.cyl(x,y+h/2,z,.6,h,m.stone);c.box(x,y+h,z,1.8,.4,1.5,m.snow)}c.box(0,y+h+.2,z,w+1.5,.7,1.6,m.stone);c.box(0,y+h+.6,z,w+1.7,.18,1.8,m.snow)}
+export function finishMap(c:ChapterContext){place(c);for(const p of placements[c.state.area])if(p.kind==='lamp')lantern(c,p.x,p.z,!!flags(c.state)[p.id],true);if(c.state.area===2&&won(c.state,'aurel')&&!c.progress.completed)c.addObj('ending','大灯の記憶をたどる',0,8,'echo')}

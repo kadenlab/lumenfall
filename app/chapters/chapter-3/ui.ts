@@ -1,0 +1,13 @@
+import type {ChapterContext,WorldObject} from '../types.ts';
+import {maps} from './map-config.ts';
+import {goal} from './events.ts';
+import {flags,canEnter} from './state.ts';
+export function hud(c:ChapterContext){const m=maps[c.state.area],g=goal(c);return `<div class=top><div class=region><small>${m.eyebrow}</small><h2>${m.name}</h2><p>${m.description}</p></div><div class=tools><button class=iconbtn data-action=sound aria-label=音の切り替え>♪</button><button class=iconbtn data-action=map aria-label=周辺の案内>⌖</button><button class=iconbtn data-action=menu aria-label=冒険メニュー>☰</button></div></div><div class=quest><small>CHAPTER 3 · 雪に閉ざされた灯</small><div class=journey>雪原 › 集落 › 旧都 › 聖堂</div><span class=quest-copy>${c.progress.completed?'次の灯へ。旅の記録から行き先を選べる。':'星硝子が示した、雪山の第三の灯を追う。'}</span>${g?`<button class=guide data-action=guide>⌖ ${g.name}</button>`:''}<button class="guide chapter-notebook" data-action=winter-notes>白嶺の手帳</button></div>`}
+export function modalUI(c:ChapterContext){const b=c.btn,f=flags(c.state),s=c.state;let h='';
+ if(c.modal==='chapter3-title')h=`<div class=eyebrow>THE THIRD LIGHT</div><h1>Chapter 3</h1><h2>雪に閉ざされた灯</h2><p>黒い星硝子が示した雪の山へ。<br>次に狙われる灯を守るために。</p>${b('winter-start','雪の山へ')}`;
+ if(c.modal==='winter-notes')h=`<h2>白嶺の手帳</h2><p>集落：オル、ユル、ネムから聞き込み。<br>門：番人の盾は星火で崩すか、回復・準備で待つ。<br>旧都：凍灯兵と亡影を鎮め、消灯装置を調べる。<br>聖堂：記録と左右の保温灯。<br>大灯：凍り始めたら2行動以内に星火。</p><p>消灯の痕跡：${f.evidence?'確認済み':'未確認'}<br>封印の記録：${f.record?'読了':'未読'}<br>西／東の灯：${f['hearth-west']?'点灯':'消灯'}／${f['hearth-east']?'点灯':'消灯'}</p><p>氷葬・雪崩は予告を見て防御。白夜は剣の威力が少し下がるが、星火は通常通り届く。暖炉と保温灯では何度でも全回復できる。</p>${b('close','手帳を閉じる')}`;
+ if(c.modal==='shop')h=`<h2>雪旅の支度</h2><p>所持金 ${s.gold}G。灯を絶やさぬ備えを。</p>${b('buy-potion','薬草 15 G ／ HP +65',s.gold<15)}${b('buy-ether','星の雫 20 G ／ MP +20',s.gold<20)}${b('buy-sword',s.sword?'暁鉄の剣 装備中':'暁鉄の剣 40 G ／ 攻撃 +9',s.sword||s.gold<40)}${b('buy-armor',s.armor?'織星の外套 装備中':'織星の外套 35 G ／ 被ダメージ −5',s.armor||s.gold<35)}${b('close','店を出る')}`;
+ return h?`<div class=overlay><div class="panel winter-panel">${h}</div></div>`:'';
+}
+export function endingUI(c:ChapterContext){return `<div class=overlay><div class="panel ending"><div class=eyebrow>THE LIGHT BEHIND THE SNOW</div><h1>雪に閉ざされた灯</h1><div class=sep></div><p>雪はまだ降っている。<br>けれど旧都の窓には、<br>帰る人を待つ火が灯った。</p><p>灯を消す者は、次の場所へ。<br>無音の環海で、第四の灯が黒く染まる。</p><div class=badge>CHAPTER 3 COMPLETE</div><p>到達レベル ${c.state.lv} · 宝箱 ${c.progress.chests.length}/4</p>${c.btn('after','灯の戻った旧都へ')}</div></div>`}
+export function visible(c:ChapterContext,o:WorldObject){if(o.kind!=='exit')return true;const dest=o.id==='cathedral'?3:o.id==='furnace'?4:o.id==='city'?2:0;return canEnter(c.state,dest)}
