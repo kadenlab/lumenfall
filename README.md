@@ -17,34 +17,6 @@ Chapter 2クリア後、冒険メニュー → **チャプターの記録 → Ch
 
 Chapter 1をクリアし、クリア画面または町の「Chapter 2 · 霧の港へ」を選んでください。クリア済みの方は「つづきから」で出発できます。冒険メニューの「チャプターの記録」から章を行き来できます。Chapter 2の内容・攻略・変更点は [Chapter 2ガイド](docs-dev/CHAPTER-2.md) を参照してください。
 
-## 既存リポジトリの更新
-
-`lumenfall-chapter3.zip` を解凍し、中の app / docs / scripts / standalone / tests / docs-dev と各ファイルを、既存リポジトリの直下へ上書きしてください。ZIP自体はアップロードしません。Pagesの main /docs 設定はそのままです。既存のCNAMEなど独自設定があれば残してください。
-
-今回の `docs/` はビルド済みです。更新だけならNode.jsやビルド操作は不要です。開発時は下記の手順を使います。
-
-## GitHub Pagesで公開する
-
-この一式には、ビルド済みのゲーム `docs/` と編集用ソースを含めています。最初の公開時にビルドや追加サービスの契約は不要です。
-
-1. GitHubで空のリポジトリを作成します。無料プランでPagesを使う場合はPublicを選択します。
-2. ZIPを解凍し、中の `docs`、`app`、`standalone`、`scripts`、`tests` と各ファイルをリポジトリ直下にアップロードしてコミットします。ZIPそのものや、その外側のフォルダをアップロードしないでください。
-3. **Settings → Pages → Build and deployment** を開きます。
-4. **Source: Deploy from a branch**、**Branch: main**、**Folder: /docs** を選び、**Save** を押します。ブランチ名が異なる場合はアップロード先を選びます。
-5. 公開処理が完了したら、同じ画面に表示されるURLで遊べます。
-
-`docs/index.html` と `docs/assets/` はセットでアップロードしてください。リポジトリ名を変えても動作する相対パスになっています。GitHub Actions用のシークレットやChatGPTへの接続は不要です。
-
-公式手順：https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
-
-## URLに個人IDを含めない場合
-
-個人アカウントのGitHub Pages標準URLにはアカウント名が入ります。リポジトリ名だけ変えてもアカウント名は消えません。
-個人IDを含めない公開URLには、所有する独自ドメインをPagesの **Custom domain** に設定するか、作品名のOrganizationで公開する必要があります。Organizationの場合、そのOrganization名が標準URLに入ります。
-この一式には個人IDや既存の公開先URLを埋め込んでいません。独自ドメインの取得・設定、Organizationの作成、実際の公開は行っていません。
-
-独自ドメインの公式手順：https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
-
 ## 操作とセーブ
 
 - WASD / 矢印キー：移動。E / Space：話す・調べる。Esc：メニュー。
