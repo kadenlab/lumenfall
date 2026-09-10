@@ -3,7 +3,7 @@ import {progress,unlockArea} from '../../systems/progression.ts';
 import {chapter2Cleared} from '../../trials/state.ts';
 import {maps} from './map-config.ts';
 import {flags,won,canEnter} from './state.ts';
-import {walkable,height} from './terrain.ts';
+import {walkable,height,insideFurnace} from './terrain.ts';
 import {enemies,damage,enemyAttack,status,start,enemyLabel,onPhase} from './enemy-config.ts';
 import {paintSprite} from './sprites.ts';
 import {goal,begin,interact,action,ending} from './events.ts';
@@ -12,7 +12,7 @@ import {dialogue} from './dialogue-config.ts';
 const chapter:Chapter={id:'chapter-3',title:'Chapter 3 — 雪に閉ざされた灯',unlockNext:['chapter-4'],maps,enemies,paintSprite,
  start:{area:0,x:0,z:17},returnTo:{area:2,x:0,z:8},respawn:{area:0,x:0,z:17},
  initialize(s){if(!chapter2Cleared(s))throw Error('Chapter 2クリア後に解放されます');const p=progress(s.campaign);if(!p.quests['third-light'])p.quests['third-light']='snowfield';unlockArea(s.campaign,0)},
- normalize(s){if(!maps[s.area]||!canEnter(s,s.area))s.area=0;if(!walkable(s,s.x,s.z)){s.x=maps[s.area].spawn.x;s.z=maps[s.area].spawn.z}},
+ normalize(s){if(!maps[s.area]||!canEnter(s,s.area))s.area=0;if(s.area===4&&insideFurnace(s.x,s.z)){s.x=0;s.z=-3.8}if(!walkable(s,s.x,s.z)){s.x=maps[s.area].spawn.x;s.z=maps[s.area].spawn.z}},
  height,walkable,hasCompanion:()=>true,vegetation:()=>false,goal,begin,interact,action,hud,modalUI,endingUI,objectVisibleInGuide:visible,
  entry(area,from){return {x:0,z:from>area?-16:17}},
  enter(c){const f=flags(c.state),key='entered-'+c.state.area;if(f[key])return;f[key]=true;if(won(c.state,'aurel'))return;const lines=c.state.area===1?dialogue.village:c.state.area===2?dialogue.city:c.state.area===3?dialogue.cathedral:c.state.area===4?dialogue.furnace:undefined;if(lines)c.talk('ミナ',lines)},
