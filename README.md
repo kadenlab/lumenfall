@@ -65,3 +65,7 @@ Chapter 1の内容は `app/chapters/chapter-1/`、共通処理は `app/game.ts`�
 npm test
 npm run build
 ```
+
+## 開発者向け DEBUG v0.1
+
+`?debug=1` で右側のDEBUGパネルを有効化、`?debug=0` で無効化します。通常セーブと分離した専用セーブでChapter・Map移動、ボス直行、進行編集、回復、JSON入出力を試せます。操作・確認済み範囲は [デバッグガイド](docs-dev/DEBUG.md) を参照してください。
