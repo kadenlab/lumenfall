@@ -1,0 +1,27 @@
+import {fresh} from '../systems/state.ts';
+import type {GameState} from '../systems/state.ts';
+import {createProgress,progress,completeChapter} from '../systems/progression.ts';
+import {encode,decode} from '../systems/save.ts';
+import {migrateTrials,maxHealth} from '../trials/state.ts';
+import {migrateChapterUnlocks} from '../systems/chapter-unlocks.ts';
+import {chapterCatalog,loadChapter} from '../chapters/registry.ts';
+import * as c1 from './presets/chapter-1.ts';
+import * as c2 from './presets/chapter-2.ts';
+import * as c3 from './presets/chapter-3.ts';
+export const presets:Record<string,typeof c1>={'chapter-1':c1,'chapter-2':c2,'chapter-3':c3};
+export const chapters=()=>[...chapterCatalog.map(c=>({id:c.id,title:c.title})),{id:'trials',title:'灯の試練'}];
+export function mark(s:GameState){(s as GameState&{debugModified?:boolean}).debugModified=true;return s}
+export function reconcile(s:GameState){const c=s.campaign;for(const [id,p] of Object.entries(c.chapters)){c.completedChapters=c.completedChapters.filter(x=>x!==id);if(p.completed)c.completedChapters.push(id)}migrateTrials(s);migrateChapterUnlocks(s);return mark(s)}
+export function preset(s:GameState,id:string,name:string){const pack=presets[id];if(!pack?.names.includes(name))throw Error('Unknown preset');s.campaign.currentChapter=id;if(name==='Start')s.campaign.chapters[id]=createProgress();const area=pack.apply(s,name);if(name==='Cleared')completeChapter(s.campaign,id==='chapter-1'?['chapter-2']:id==='chapter-2'?['chapter-3']:['chapter-4']);return area}
+export function unlockForDebug(s:GameState,id:string){const current=s.campaign.currentChapter;const needs=id==='chapter-3'||id==='trials'?['chapter-1','chapter-2']:id==='chapter-2'?['chapter-1']:[];for(const prior of needs)if(!progress(s.campaign,prior).completed)preset(s,prior,'Cleared');s.campaign.currentChapter=current;if(!s.campaign.unlockedChapters.includes(id))s.campaign.unlockedChapters.push(id);reconcile(s)}
+export async function travel(source:GameState,id:string,area?:number,shortcut?:string){const pack=await loadChapter(id),s=structuredClone(source);progress(s.campaign).position={area:s.area,x:s.x,z:s.z};unlockForDebug(s,id);s.campaign.currentChapter=id;pack.initialize(s);let dest=area??pack.start.area;if(shortcut){s.campaign.chapters[id]=createProgress();dest=preset(s,id,shortcut);}else if(area!==undefined){const gate=id==='chapter-3'?({1:'Village Unlocked',2:'Old City Unlocked',3:'Cathedral Unlocked',4:'Before Aurel'} as Record<number,string>)[area]:id==='chapter-2'?({1:'Bridge Open',2:'Before Bellwarden',3:'Before Nereis'} as Record<number,string>)[area]:id==='chapter-1'&&area===2?'Before Boss':undefined;if(gate)preset(s,id,gate)}const m=pack.maps.find(m=>m.id===dest);if(!m)throw Error('Unknown map');s.area=dest;s.x=m.spawn.x;s.z=m.spawn.z;pack.normalize(s);progress(s.campaign).position={area:s.area,x:s.x,z:s.z};reconcile(s);return s}
+export function playerAction(s:GameState,key:string){const mp=30+(s.lv-1)*8;if(key==='hp'||key==='both')s.hp=maxHealth(s);if(key==='mp'||key==='both')s.mp=mp;const [field,amount]=key.split(':');if(['gold','potions','ethers','xp','lv'].includes(field)){const n=Number(amount);if(!Number.isFinite(n)||n<=0||n>1000)throw Error('Invalid amount');(s as any)[field]=Math.min(field==='lv'?999:999999,(s as any)[field]+n);if(field==='xp')while(s.xp>=s.lv*30&&s.lv<999){s.xp-=s.lv*30;s.lv++}}return mark(s)}
+export function validateJSON(raw:string){if(raw.length>2_000_000)throw Error('JSON too large');const d=JSON.parse(raw);function check(v:any){if(v&&typeof v==='object')for(const [k,x]of Object.entries(v)){if(['__proto__','constructor','prototype'].includes(k))throw Error('Unsafe key');check(x)}}check(d);return d}
+export function importSave(raw:string){validateJSON(raw);const s=decode(raw);if(!chapters().some(c=>c.id===s.campaign.currentChapter))throw Error('Unknown chapter');for(const p of Object.values(s.campaign.chapters))validateProgress(p);return mark(s)}
+export function validateProgress(p:any){if(!p||Array.isArray(p)||typeof p.completed!=='boolean')throw Error('completed must be boolean');for(const k of ['bosses','defeatedEnemies','chests'])if(!Array.isArray(p[k])||!p[k].every((x:any)=>typeof x==='string'))throw Error(k+' must be string[]');if(!Array.isArray(p.unlockedAreas)||!p.unlockedAreas.every(Number.isInteger))throw Error('Invalid areas');for(const k of ['flags','quests']){if(!p[k]||typeof p[k]!=='object'||Array.isArray(p[k]))throw Error('Invalid '+k);for(const v of Object.values(p[k]))if(k==='quests'?typeof v!=='string':!['boolean','number','string'].includes(typeof v)||typeof v==='number'&&!Number.isFinite(v))throw Error('Invalid '+k+' value')}if(p.position&&(!Number.isInteger(p.position.area)||!Number.isFinite(p.position.x)||!Number.isFinite(p.position.z)))throw Error('Invalid position')}
+export function editProgress(s:GameState,raw:string){const p=validateJSON(raw);validateProgress(p);const n=structuredClone(s);n.campaign.chapters[n.campaign.currentChapter]=p;return reconcile(n)}
+export function resetChapter(s:GameState){const n=structuredClone(s);n.campaign.chapters[n.campaign.currentChapter]=createProgress();return reconcile(n)}
+export const exportSave=(s:GameState)=>JSON.stringify(encode(s),null,2);
+export const resetAll=()=>mark(fresh());
+/** Clamp only debug trial HP writes; lamp failures and turn rules remain intact. */
+export function immortal(s:GameState){return new Proxy(s,{set(t,k,v){return Reflect.set(t,k,k==='hp'?Math.max(1,v):v)}})}
