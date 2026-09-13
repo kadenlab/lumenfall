@@ -1,0 +1,2 @@
+import type {MapConfig} from '../types.ts';
+export const maps:MapConfig[]=[{id:0,name:'開発用エリア',eyebrow:'DEVELOPMENT',description:'',night:true,spawn:{x:0,z:8},load:()=>import('./maps/entry.ts')}];

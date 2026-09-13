@@ -1,0 +1,1 @@
+import{a as e,c as t,n,o as r,r as i,s as a}from"./scenery-DFdVIUWS.js";function o(o){i(o);let s=r(o);for(let t of[-12,0,12])e(o,-4,t,!0),e(o,4,t);a(o,-8,-8,7),a(o,8,-8,5),t(o,0,8,-22,9,s.edge,!0);for(let e=0;e<5;e++)o.box(-12+e*5,-.5,-25,3,.04,.12,s.glow,!1);n(o)}export{o as build};
