@@ -1,0 +1,1 @@
+import{a as e,c as t,n,o as r,r as i,s as a}from"./scenery-DN4iKqvP.js";function o(o){i(o);let s=r(o);for(let e of[3,6,10])t(o,0,o.height(0,-5)+.1,-5,e,e===6?s.glow:s.gold);for(let e of[-12,12])for(let t of[-12,2,13])a(o,e,t,7);t(o,0,7,-19,7,s.edge,!0),e(o,-5,-2,!0),e(o,5,-2),n(o)}export{o as build};

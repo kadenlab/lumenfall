@@ -1,0 +1,1 @@
+import{o as e}from"./object-config-BxUt8Nrp.js";import{c as t,n,o as r,r as i,s as a,t as o}from"./scenery-DN4iKqvP.js";function s(s){i(s);let c=r(s);for(let e of[-10,10])for(let t of[-13,0,13])a(s,e,t,4);t(s,0,2,-8,5,c.gold),t(s,0,4,-13,4,c.edge,!0),o(s,0,-13,!!e(s.state).east),s.box(8,.35,6,1.3,.6,1,c.gold),n(s)}export{s as build};
