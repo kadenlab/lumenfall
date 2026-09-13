@@ -1,0 +1,3 @@
+import type {ChapterContext} from '../../types.ts';
+import {foundation,palette,pillar,lamp,finish} from './scenery.ts';
+export function build(c:ChapterContext){foundation(c);const m=palette(c);for(const z of [-15,-6,3,12]){pillar(c,-7,z,6);pillar(c,14,z,6);c.box(3.5,7,z,23,.6,1.1,m.dark)}for(let z=-17;z<17;z+=2){const y=c.height(0,z);if(z<-8||z>-5)c.box(-5.5,y+.4,z,.12,.08,1.8,m.glow,false);c.box(5.5,y+.4,z,.12,.08,1.8,m.gold,false)}c.box(0,c.height(0,-11)+.4,-11,2,.7,1,m.dark);for(const x of [-1,1])c.box(x,c.height(0,-11)+.78,-11,.55,.04,.2,m.glow,false);c.box(9,c.height(9,-3)+.2,-3,1,.35,1.2,m.gold);lamp(c,3,12,true);finish(c)}

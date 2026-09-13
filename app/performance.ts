@@ -28,7 +28,8 @@ export function batchStatic(world:T.Group){
   if(!(child instanceof T.Mesh)||child.userData.dynamic||!child.visible||Array.isArray(child.material)||!(child.material instanceof T.MeshStandardMaterial)||child.material.transparent)continue;
   before++;
   const m=child.material;
-  const key=[m.color.getHex(),m.emissive.getHex(),m.emissiveIntensity,m.roughness,m.metalness,m.side,m.userData.kind??'',child.castShadow,child.receiveShadow,Math.floor(child.position.x/12),Math.floor(child.position.z/12)].join('|');
+  const specialized=!!(m.map||m.alphaMap||m.normalMap||m.roughnessMap||m.metalnessMap||m.emissiveMap||m.aoMap||m.lightMap||m.bumpMap||m.displacementMap||m.alphaTest||m.onBeforeCompile!==T.Material.prototype.onBeforeCompile);
+  const key=[specialized?m.uuid:'',m.color.getHex(),m.emissive.getHex(),m.emissiveIntensity,m.roughness,m.metalness,m.side,m.userData.kind??'',child.castShadow,child.receiveShadow,Math.floor(child.position.x/12),Math.floor(child.position.z/12)].join('|');
   const group=groups.get(key)??[];group.push(child);groups.set(key,group);
  }
  for(const meshes of groups.values()){

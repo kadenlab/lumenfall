@@ -31,3 +31,10 @@
 .trial-lamp{height:7px;background:#020611;border:1px solid #85d8e877;width:min(320px,85%);margin:6px auto}.trial-lamp i{display:block;height:100%;background:linear-gradient(90deg,#328fbe,#b6ffef);box-shadow:0 0 10px #71e8ff99;transition:width .3s}
 
 .trial-roster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.trial-roster button{text-align:left;padding:7px 9px;min-width:0;border-color:#8bb6ce88;background:#0b1a2bed}.trial-roster small{display:block;font:12px Arial;color:#e8f5ff;margin-top:3px}.trial-roster button:disabled{opacity:.7}.trial-roster span{display:block;overflow-wrap:anywhere}@media(max-width:600px){.trial-roster button{font-size:11px;padding:5px 4px}.trial-roster small{font-size:11px}}
+
+/* The optional chapter command row shares the existing battle surface. */
+.battle:has([data-action^="route:"]) .commands{width:400px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.battle:has([data-action^="route:"]) .commands button{font-size:13px;min-height:62px}
+.battle:has([data-action^="route:"]) .battlelog{bottom:260px}
+@media(max-width:600px){.battle:has([data-action^="route:"]) .commands{width:calc(100% - 28px);right:14px;bottom:12px;gap:4px}.battle:has([data-action^="route:"]) .commands button{font-size:11px;padding:6px;min-height:56px}.battle:has([data-action^="route:"]) .commands small{min-height:14px}.battle:has([data-action^="route:"]) .bottom{bottom:230px}.battle:has([data-action^="route:"]) .party{padding:7px 10px;width:170px}.battle:has([data-action^="route:"]) .battlelog{bottom:335px;font-size:12px}.battle:has([data-action^="route:"]) .battlehead{width:92vw;top:14px}}
+@media(max-height:520px){.battle:has([data-action^="route:"]) .commands{width:46%;right:8px;bottom:8px}.battle:has([data-action^="route:"]) .battlehead{width:47%;left:25%;top:6px}.battle:has([data-action^="route:"]) .bottom{bottom:8px}.battle:has([data-action^="route:"]) .battlelog{width:48%;bottom:145px}}
