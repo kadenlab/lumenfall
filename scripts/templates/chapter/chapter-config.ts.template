@@ -1,0 +1,23 @@
+import type {Chapter} from '../types.ts';
+import {chapterCatalog,successors} from '../catalog.ts';
+import {canAccessChapter} from '../../systems/chapter-unlocks.ts';
+import {unlockArea} from '../../systems/progression.ts';
+import {maps} from './map-config.ts';
+// Replace __CHAPTER_ID__ and register metadata before loading this template.
+const meta=chapterCatalog.find(c=>c.id==='__CHAPTER_ID__')!;
+const chapter:Chapter={
+ id:meta.id,title:meta.title,start:meta.start,unlockNext:successors(meta.id),
+ maps,enemies:{},returnTo:meta.start,respawn:meta.start,
+ initialize(s){if(!canAccessChapter(s,meta.id))throw Error('前提Chapterをクリアしてください');unlockArea(s.campaign,meta.start.area)},
+ normalize(s){if(!maps.some(m=>m.id===s.area))Object.assign(s,meta.start)},
+ entry(area){return maps.find(m=>m.id===area)!.spawn},height:()=>0,
+ walkable:(_s,x,z)=>Math.abs(x)<18&&Math.abs(z)<18,hasCompanion:()=>true,
+ paintSprite:()=>false,vegetation:()=>false,goal:()=>undefined,
+ // Replace these hooks with chapter-local events / UI. No story is supplied.
+ begin:()=>{},enter:()=>{},interact:()=>false,action:()=>false,
+ hud:()=>'',modalUI:()=>'',endingUI:()=>'',objectVisibleInGuide:()=>true,
+ onBossVictory:()=>{},onEnding:()=>{},onDefeat:()=>{},onRest:()=>{},
+ music:{field:[196,220],night:[146.83,196],battle:[146.83,220]},
+ effects:{phaseFog:'#203047',phaseDensity:.02,phaseSun:'#bde8ff'}
+};
+export default chapter;

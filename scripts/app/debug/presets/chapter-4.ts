@@ -1,0 +1,7 @@
+import {progress} from '../../systems/progression.ts';
+import type {GameState} from '../../systems/state.ts';
+export const names=['Start','Islands','Before Midboss','Corridor','Before Ignas','Cleared'];
+export function apply(s:GameState,name:string){const p=progress(s.campaign);if(name==='Start')return 0;p.flags.briefed=true;p.quests['ring-current']='islands';if(name==='Islands')return 1;p.flags.west=p.flags.east=true;p.defeatedEnemies.push('biter','jelly','shell','ray');p.quests['ring-current']='ruins';if(name==='Before Midboss')return 4;p.bosses.push('seawarden');p.defeatedEnemies.push('seawarden');p.quests['ring-current']='corridor';if(name==='Corridor')return 5;p.flags.cut=p.flags.van=true;p.quests['ring-current']='heart';if(name==='Before Ignas')return 7;p.bosses.push('ignas');p.defeatedEnemies.push('ignas');p.flags.restored=p.flags.network=p.flags.endingComplete=true;p.quests['ring-current']='complete';return 1}
+
+export const mapGates:Record<number,string>={1:'Islands',2:'Islands',3:'Islands',4:'Before Midboss',5:'Corridor',6:'Before Ignas',7:'Before Ignas'};
+export const placements=()=>import('../../chapters/chapter-4/object-config.ts');
