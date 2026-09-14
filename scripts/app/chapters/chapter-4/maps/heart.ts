@@ -1,5 +1,0 @@
-import * as T from 'three';
-import type {ChapterContext} from '../../types.ts';
-import {foundation,palette,pillar,ring,finish} from './scenery.ts';
-import {flags} from '../state.ts';
-export function build(c:ChapterContext){foundation(c);const m=palette(c),restored=!!flags(c.state).restored;c.cyl(0,c.height(0,-10)+.4,-10,3.2,.8,m.dark,24);ring(c,0,5,-13,6,m.stone,true);ring(c,0,5,-12.8,5.2,m.gold,true);ring(c,0,c.height(0,-10)+.9,-10,3,m.glow);const core=new T.MeshStandardMaterial({color:'#e8fff1',emissive:restored?'#ffe4a6':'#99efe6',emissiveIntensity:2.2,metalness:.3,roughness:.2});c.world.userData.core=core;const orb=new T.Mesh(new T.OctahedronGeometry(1.3),core);orb.position.set(0,5,-12.4);c.world.add(orb);const lamps:any={};for(const [i,l]of ['attack','defense','cycle'].entries()){const x=(i-1)*4,z=-11,y=i===1?9:5,color=['#ffad8f','#9cd7ff','#ffe8a0'][i];const lm=new T.MeshStandardMaterial({color,emissive:color,emissiveIntensity:2.1});lamps[l]=lm;ring(c,x,y,z,.7,lm,true);c.light(x,y,z,color,8)}c.world.userData.ringLamps=lamps;for(const x of [-12,12])for(const z of [-13,3,13])pillar(c,x,z,6);finish(c)}

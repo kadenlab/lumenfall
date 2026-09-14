@@ -1,5 +1,0 @@
-import type {ChapterContext} from '../../types.ts';
-export function build(c:ChapterContext){
- c.box(0,-.5,0,38,1,38,c.mat('#40505a'));
- // Add chapter-local placements; preserve collision bounds and disposal ownership.
-}

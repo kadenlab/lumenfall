@@ -1,3 +1,0 @@
-import type {ChapterContext} from '../../types.ts';
-import {foundation,house,lantern,arch,finishMap} from './scenery.ts';
-export function build(c:ChapterContext){const m=foundation(c);house(c,-12,4,6,3.5,true);house(c,12,2,6,3.8,true);house(c,-12,-8,6,4);house(c,12,-12,7,4.5);c.cyl(-3,.45,-1,1.6,.9,m.stone);c.cyl(-3,.94,-1,1.3,.06,m.ice);for(const x of [-4.6,-1.4])c.cyl(x,1.8,-1,.09,3,m.wood);c.box(-3,3.3,-1,3.8,.3,2.4,m.snow);lantern(c,-7,10,true,true);lantern(c,5,12,false);arch(c,-15,11,7);for(const x of [-8,8]){c.box(x,1.5,-15,4,3,2,m.stone);c.box(x,3.1,-15,4.3,.3,2.3,m.snow)}c.box(8,.6,8,1.2,1.2,1,m.wood);finishMap(c)}

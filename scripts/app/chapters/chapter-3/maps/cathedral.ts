@@ -1,4 +1,0 @@
-import * as T from 'three';
-import type {ChapterContext} from '../../types.ts';
-import {foundation,pillar,arch,lantern,finishMap} from './scenery.ts';
-export function build(c:ChapterContext){const m=foundation(c);for(const z of [10,0,-10])for(const x of [-18,18])pillar(c,x,z,8);for(const z of [13,-13])arch(c,z,18,9);const blue=new T.MeshStandardMaterial({color:'#80c4e9',emissive:'#438cc8',emissiveIntensity:.7,roughness:.18});for(const side of [-1,1])for(let i=0;i<4;i++){c.box(side*19,4,10-i*7,.25,5,2.8,blue,false);c.box(side*18.7,4,10-i*7,.15,.14,3,m.stone);const icicle=new T.Mesh(new T.ConeGeometry(.7,4,5),m.ice);icicle.rotation.z=Math.PI;icicle.position.set(side*17,6,9-i*7);c.world.add(icicle)}for(let z=12;z>-14;z-=5){const ring=new T.Mesh(new T.TorusGeometry(1.7,.025,4,20),blue);ring.rotation.x=Math.PI/2;ring.position.set(0,c.height(0,z)+.1,z);c.world.add(ring)}c.box(0,c.height(0,5)+.5,5,1.8,1,1.2,m.stone);lantern(c,3,12,true,true);finishMap(c)}

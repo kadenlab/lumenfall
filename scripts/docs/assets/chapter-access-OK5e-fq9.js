@@ -1,1 +1,0 @@
-function e(e,t){return e.campaign.completedChapters.includes(t)||e.campaign.chapters[t]?.completed===!0}function t(t,n){if(!e(t,n))return;let r=t.campaign;r.completedChapters.includes(n)||r.completedChapters.push(n),r.chapters[n]&&(r.chapters[n].completed=!0)}export{t as n,e as t};

@@ -1,4 +1,0 @@
-import type {GameState} from '../systems/state.ts';
-import {gear} from '../systems/gear.ts';
-import {cases,FIRST_XP,REPEAT_XP} from './catalog.ts';
-export function investigationMenu(s:GameState,btn:(id:string,label:string,disabled?:boolean)=>string){return `<div class=overlay><div class=panel><div class=eyebrow>LAMP ROAD INVESTIGATION</div><h2>灯路異変調査</h2><p>三つの痕跡を調べ、強化個体を鎮める。出発時にHP・MP全回復。<br>本編とは別の調査記録です。装備報酬は自動装備されません。</p>${cases.map(c=>btn('investigate:'+c.id,`${s.investigations?.cleared.includes(c.id)?'CLEAR · 再調査':'未解決'} ｜ ${c.title}<small>${c.place} · 推奨Lv ${c.level}<br>初回：${gear[c.item].name}／${FIRST_XP}XP・${c.gold}G<br>再戦：${REPEAT_XP}XP・${c.repeatGold}G</small>`)).join('')}<p>全4件解決：灯路の剣 ${s.investigations?.allRewarded?'取得済み':''}</p>${btn('investigation-home','環海へ帰る')}${btn('close','閉じる')}</div></div>`}
