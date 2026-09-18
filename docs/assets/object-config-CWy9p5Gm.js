@@ -1,1 +1,0 @@
-import{n as e,r as t,t as n}from"./object-config-CcSloE_m.js";export{n as placeObjects,e as placements,t as treasures};

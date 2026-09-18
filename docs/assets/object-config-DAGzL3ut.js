@@ -1,1 +1,0 @@
-import{n as e,r as t,t as n}from"./object-config-Dt1tERK-.js";export{n as place,e as placements,t as treasures};

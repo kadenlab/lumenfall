@@ -1,1 +1,0 @@
-import{a as e}from"./object-config-C_e8oR4x.js";import{a as t,l as n,n as r,o as i,r as a,t as o}from"./scenery-DFdVIUWS.js";function s(s){a(s);let c=i(s);n(s),o(s,0,-13,!!e(s.state).west);let l=s.cyl(-11,.4,-8,.5,5,c.stone);l.rotation.z=1.3;for(let e of[12,1,-8])t(s,5,e);s.box(-11,.3,5,1.2,.6,1,c.gold),r(s)}export{s as build};

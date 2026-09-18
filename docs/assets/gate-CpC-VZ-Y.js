@@ -1,1 +1,0 @@
-function e(e,t){let n=new URLSearchParams(e).get(`debug`);if(n!==null)return n===`1`;try{return t.getItem(`lumenfall-debug`)===`1`}catch{return!1}}var t=`lumenfall-debug-save`;function n(e){return{getItem(t){return t===`lumenfall-save`?e.getItem(`lumenfall-debug-save`)??e.getItem(t):e.getItem(t)},setItem(n,r){e.setItem(t,r)},removeItem(){e.removeItem(t)}}}export{e as n,n as r,t};
