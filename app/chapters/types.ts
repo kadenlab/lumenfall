@@ -3,7 +3,7 @@ import type {GameState} from '../systems/state.ts';
 import type {ChapterProgress} from '../systems/progression.ts';
 export type WorldObject={x:number;z:number;r:number;name:string;kind:string;id:string;mesh?:T.Object3D};
 /** Capability boundary: chapter content can use world primitives and game actions, never renderer/input internals. */
-export type ChapterContext={
+export type ChapterContext={sceneryOnly?:boolean;
  state:GameState;progress:ChapterProgress;world:T.Group;scene:T.Scene;ambient:T.HemisphereLight;sun:T.DirectionalLight;
  objects:WorldObject[];blocks:{x:number;z:number;w:number;d:number}[];mats:Record<string,T.MeshStandardMaterial>;
  reskin:(sprite:T.Sprite,kind:string)=>void;animationTime:{value:number};mobile:boolean;battle?:{id:string;hp:number;max:number;phase:number;turn:number};
@@ -18,7 +18,7 @@ export type ChapterContext={
  switchChapter:(id:string)=>Promise<void>;btn:(id:string,label:string,disabled?:boolean)=>string;finish:()=>void;
 };
 export type MapConfig={id:number;name:string;eyebrow:string;description:string;night:boolean;spawn:{x:number;z:number};load:()=>Promise<{build:(ctx:ChapterContext)=>void}>};
-export type EnemyConfig={hp:number;attack:number;xp:number;gold:number;boss?:boolean;scriptedBattle?:boolean;keepAfterVictory?:boolean;fireBonus?:number;intro?:string;eyebrow?:string;phaseAttack?:number;chargeAttack?:number;chargeText?:string;chargeName?:string;phaseText?:string};
+export type EnemyConfig={victoryText?:string;hp:number;attack:number;xp:number;gold:number;boss?:boolean;scriptedBattle?:boolean;keepAfterVictory?:boolean;fireBonus?:number;intro?:string;eyebrow?:string;phaseAttack?:number;chargeAttack?:number;chargeText?:string;chargeName?:string;phaseText?:string};
 export type Chapter={
  combat?:{hideInfo?:(ctx:ChapterContext)=>boolean;commands?:(ctx:ChapterContext)=>{id:string;label:string;disabled?:boolean}[];audioScale?:(ctx:ChapterContext)=>number;start?:()=>void;onPhase?:(ctx:ChapterContext)=>void;enemyLabel?:(ctx:ChapterContext,id:string,turn:number)=>string;damage:(ctx:ChapterContext,id:string,turn:number,command:string,base:number)=>number;enemyAttack:(ctx:ChapterContext,id:string,turn:number,command:string,base:number)=>number;status:(ctx:ChapterContext,id:string,turn:number)=>string;onCommand?:(ctx:ChapterContext,id:string,turn:number,command:string)=>void};
  paintSprite:(kind:string,rect:(x:number,y:number,w:number,h:number,color:string)=>void)=>boolean;id:string;title:string;unlockNext:string[];maps:MapConfig[];enemies:Record<string,EnemyConfig>;

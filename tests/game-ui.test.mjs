@@ -10,7 +10,7 @@ async function harness(width=1280,search='',saved=completed3()){
  const timeout=(fn,ms=0)=>{const id=++seq;jobs.set(id,{fn,at:now+ms});return id},clear=id=>jobs.delete(id);set('setTimeout',timeout);set('clearTimeout',clear);set('requestAnimationFrame',fn=>timeout(()=>fn(now),16));set('cancelAnimationFrame',clear);w.setTimeout=timeout;w.clearTimeout=clear;
  const ctx2=new Proxy({createImageData:(x,y)=>({data:new Uint8ClampedArray(x*y*4)}),createLinearGradient:()=>({addColorStop(){}}),createRadialGradient:()=>({addColorStop(){}})},{get:(o,k)=>k in o?o[k]:(()=>{})});w.HTMLCanvasElement.prototype.getContext=function(type){return type==='2d'?ctx2:null};
  w.HTMLElement.prototype.setPointerCapture=function(id){this._capture=id};w.HTMLElement.prototype.hasPointerCapture=function(id){return this._capture===id};w.HTMLElement.prototype.releasePointerCapture=function(){this._capture=null};
- let renders=0;const originalRender=SoftwareRenderer.prototype.render;SoftwareRenderer.prototype.render=function(scene,camera){renders++;scene.updateMatrixWorld();camera.updateMatrixWorld()};if(saved)w.localStorage.setItem('lumenfall-save',JSON.stringify(encode(saved)));
+ let renderedScene;let renders=0;const originalRender=SoftwareRenderer.prototype.render;SoftwareRenderer.prototype.render=function(scene,camera){renderedScene=scene;renders++;scene.updateMatrixWorld();camera.updateMatrixWorld()};if(saved)w.localStorage.setItem('lumenfall-save',JSON.stringify(encode(saved)));
  const dispose=await startGame();
  const flush=async()=>{for(let i=0;i<50;i++)await new Promise(r=>setImmediate(r))};
  const advance=async(ms)=>{const end=now+ms;for(let i=0;i<20000;i++){let id=-1,next=Infinity;for(const [k,v]of jobs)if(v.at<next){id=k;next=v.at}if(next>end)break;now=next;const job=jobs.get(id);jobs.delete(id);job.fn()}now=end;await flush()};
@@ -20,7 +20,7 @@ async function harness(width=1280,search='',saved=completed3()){
  const go=async id=>{await click('map');await click('walk-'+id);await advance(14000);assert.ok(button('interact'),'cannot reach '+id);await click('interact');await dialogues();await advance(1600)};
  const fight=async()=>{let turn=0,phase=false;for(;turn<110&&button('attack');turn++){const text=w.document.body.textContent;phase ||= /第二段階/.test(text);let cmd='fire';const hpText=w.document.querySelector('.party')?.textContent??'';const match=hpText.match(/HP\s*(\d+)\/(\d+)/);const hp=match?Number(match[1]):999;const hint=w.document.querySelector('.enemy-hint')?.textContent??'';
  if(/今、防御|環海沈降！/.test(hint))cmd='guard';else if(hp<130&&button('potion')&&!button('potion').disabled)cmd='potion';else if(hp<100&&button('heal')&&!button('heal').disabled)cmd='heal';else if(/まで2行動/.test(hint)&&button('route:cycle')&&!button('route:cycle').disabled)cmd='route:cycle';else if(button('route:defense')&&!button('route:defense').disabled)cmd='route:defense';else if(button('fire')?.disabled)cmd=button('ether')&&!button('ether').disabled?'ether':'attack';await click(cmd);await advance(4000)}assert.ok(turn<110,'battle did not end');await dialogues();return turn};
- return {w,button,click,go,fight,advance,dialogues,read,renders:()=>renders,close(){dispose();SoftwareRenderer.prototype.render=originalRender;dom.window.close();for(const [k,d]of original)if(d)Object.defineProperty(globalThis,k,d);else delete globalThis[k]}};
+ return {w,button,click,go,fight,advance,dialogues,read,renders:()=>renders,markers:()=>{const signs=[];renderedScene?.traverse(o=>{if(o.userData.explorationUI)signs.push(o)});return signs},close(){dispose();SoftwareRenderer.prototype.render=originalRender;dom.window.close();for(const [k,d]of original)if(d)Object.defineProperty(globalThis,k,d);else delete globalThis[k]}};
 }
 test('actual controller UI: C3 old save to complete C4 via walking/dialogue/commands; saves and revisits',async()=>{const h=await harness();try{assert.equal(h.w.document.querySelector('#lumenfall-debug'),null);await h.click('load');await h.dialogues();await h.click('menu');await h.click('chapters');await h.click('chapter:chapter-4');assert.ok(h.button('ring-start'));await h.click('ring-start');await h.dialogues();await h.go('port');await h.go('rau');
  for(const [island,enemies,lamp]of [['west',['biter','jelly'],'west'],['east',['shell','ray'],'east']]){await h.go(island);for(const id of enemies){await h.go(id);await h.fight()}await h.go(lamp);await h.go('port');await h.go('rest')}
@@ -32,3 +32,31 @@ test('actual controller new game is unchanged; C4 remains locked',async()=>{cons
 test('actual mobile battle UI consumes switch turn, enforces cooldown, defeat returns safely and retries',async()=>{const {travel}=await import('../app/debug/debug-actions.ts');const s=await travel(completed3(),'chapter-4',undefined,'Before Ignas');s.hp=1;const h=await harness(390,'?debug=0',s);try{await h.click('load');await h.dialogues();await h.go('ignas');assert.equal(h.w.document.querySelectorAll('[data-action^="route:"]').length,3);await h.click('route:cycle');assert.equal(h.button('route:cycle').disabled,true);await h.advance(4000);await h.dialogues();assert.match(h.w.document.body.textContent,/無響の港/);const after=await h.read();assert.equal(after.hp,340);assert.equal(after.campaign.chapters['chapter-4'].bosses.includes('ignas'),false);await h.go('ruins');await h.go('corridor');await h.go('altar');await h.go('heart');await h.go('ignas');assert.ok(h.button('attack'));assert.equal(h.button('route:cycle').disabled,false)}finally{h.close()}});
 test('actual shop and gear UI preserve two accessories and save selected equipment',async()=>{const {travel}=await import('../app/debug/debug-actions.ts');const s=await travel(completed3(),'chapter-4',1);s.trials.owned=['warden','afterglow'];s.trials.slots=['warden','afterglow'];const h=await harness(390,'',s);try{await h.click('load');await h.dialogues();await h.go('shop');await h.click('ring-buy:ring-sword');await h.click('ring-buy:ring-cloak');await h.click('close');const saved=await h.read();assert.equal(saved.gear.weapon,'ring-sword');assert.equal(saved.gear.armor,'ring-cloak');assert.deepEqual(saved.trials.slots,['warden','afterglow']);await h.click('menu');await h.click('gear-menu');assert.ok(h.button('gear:ring-sword'));await h.click('close');await h.click('menu');await h.click('equipment');assert.match(h.w.document.body.textContent,/灯守の指輪/)}finally{h.close()}});
 test('actual controller same-chapter map build failure keeps position, progress, save and permits retry',async()=>{const {travel}=await import('../app/debug/debug-actions.ts');const {default:c4}=await import('../app/chapters/chapter-4/chapter-config.ts');const s=await travel(completed3(),'chapter-4');const h=await harness(390,'',s),load=c4.maps[1].load;try{await h.click('load');await h.dialogues();const before=h.w.localStorage.getItem('lumenfall-save');c4.maps[1].load=async()=>({build(){throw Error('map build')}});await h.go('port');assert.match(h.w.document.body.textContent,/環海入口/);assert.equal(h.w.localStorage.getItem('lumenfall-save'),before);c4.maps[1].load=load;await h.go('port');assert.match(h.w.document.body.textContent,/無響の港/)}finally{c4.maps[1].load=load;h.close()}});
+
+test('battle hides exploration DOM and world navigation, then restores on victory',async()=>{
+ const {travel}=await import('../app/debug/debug-actions.ts');
+ const h=await harness(390,'',await travel(completed3(),'chapter-4',2));
+ try{
+  await h.click('load');await h.dialogues();await h.advance(100);
+  assert.ok(h.markers().length>0);assert.ok(h.markers().every(o=>o.visible));
+  await h.go('biter');
+  assert.equal(h.w.document.querySelector('.top,.quest,.interact,.joystick,.overlay,.toast'),null);
+  assert.ok(h.markers().every(o=>!o.visible));
+  assert.equal(h.w.document.querySelectorAll('.battle-dock .commands>button').length,6);
+  assert.equal(h.w.document.querySelectorAll('.battle-dock .battlelog').length,1);
+  await h.fight();await h.advance(100);
+  assert.ok(h.button('map'));assert.ok(h.w.document.querySelector('#joystick'));
+  assert.ok(h.markers().length>0);assert.ok(h.markers().every(o=>o.visible));
+ }finally{h.close()}
+});
+test('battle state suppresses a chapter overlay independently of its chapter implementation',async()=>{
+ const {travel}=await import('../app/debug/debug-actions.ts');
+ const {default:c4}=await import('../app/chapters/chapter-4/chapter-config.ts');
+ const original=c4.modalUI;
+ c4.modalUI=c=>original(c)+'<button data-action="test-exploration">港へ戻る</button>';
+ const h=await harness(390,'',await travel(completed3(),'chapter-4',2));
+ try{await h.click('load');await h.dialogues();assert.ok(h.button('test-exploration'));
+  await h.go('biter');assert.equal(h.button('test-exploration'),null);
+  await h.fight();assert.ok(h.button('test-exploration'));
+ }finally{c4.modalUI=original;h.close()}
+});

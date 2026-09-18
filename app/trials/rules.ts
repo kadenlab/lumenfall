@@ -24,7 +24,7 @@ export function allowed(r:TrialRun,cmd:string){if(r.result!=='active')return fal
 export function totalHP(r:TrialRun){return r.foes.reduce((n,f)=>n+f.hp,0)}
 export function forecast(r:TrialRun){if(hidden(r))return '濃霧に包まれ、敵の情報は見えない。';if(r.id===4)return (r.turn+1)%3===0?'予告：砕灯撃（強攻撃） — 身を守る！':'予告：影の斬撃 ／ 3行動ごとに砕灯撃';if(r.id===5)return (r.turn+1)%3===0?'予告：大吸光 — 灯を守る！':'予告：爪撃と吸光';if(r.id===3)return (r.turn+1)%3===0?'予告：霧裂き（大ダメージ） · 弱点：星火':'予告：爪撃 · 弱点：星火';return r.foes.filter(f=>f.hp>0).map(f=>f.name+' → '+(f.target==='lamp'?'灯':f.target==='adaptive'?(r.lamp<55?'灯':'主人公'):'主人公')).join(' ／ ')}
 /** One explicit command resolves one turn. No real-time damage or timers in the rules. */
-export function resolveTurn(r:TrialRun,s:GameState,cmd:string,damage:number,rng=Math.random){
+export function resolveTurn(r:TrialRun,s:GameState,cmd:string,damage:number,rng=Math.random,mitigate?:(n:number)=>number){
  if(!allowed(r,cmd))return false;
  r.turn++;r.reveal=Math.max(0,r.reveal-1);r.message='';
  if(cmd==='raise'){r.reveal=3;r.message='灯を掲げた。3ターンの間、霧の奥が見える。'}
@@ -35,7 +35,7 @@ export function resolveTurn(r:TrialRun,s:GameState,cmd:string,damage:number,rng=
  if(r.id===5&&r.foes[0].hp<=480&&r.phase===1){r.phase=2;r.shards+=2;r.message+=' 灯喰らいが第二形態へ。光の欠片が2つ落ちた！'}
  let hpDamage=0,lampDamage=0;
  for(const f of r.foes){if(f.hp<=0)continue;const lamp=r.id===1&&(f.target==='lamp'||f.target==='adaptive'&&r.lamp<55);if(lamp){lampDamage+=Math.ceil(f.attack*(cmd==='protect'?.1:1));continue}
- let n=f.attack;if(r.id===4&&r.turn%3===0)n=Math.ceil(n*2.4);if(r.id===3&&r.turn%3===0)n=68;if(r.id===5)n=r.phase===2?24:18;hpDamage+=incoming(s,n,cmd==='guard'||cmd==='protect',rng);}
+ let n=f.attack;if(r.id===4&&r.turn%3===0)n=Math.ceil(n*2.4);if(r.id===3&&r.turn%3===0)n=68;if(r.id===5)n=r.phase===2?24:18;const hit=incoming(s,n,cmd==='guard'||cmd==='protect',rng);hpDamage+=mitigate?mitigate(hit):hit;}
  if(r.id===5)lampDamage=Math.ceil((r.turn%3===0?(r.phase===2?40:32):(r.phase===2?6:4))*(cmd==='protect'?.1:1));
  s.hp=Math.max(0,s.hp-hpDamage);r.lamp=Math.max(0,r.lamp-lampDamage);
  if(hpDamage)r.message+=' HP −'+hpDamage+'。';else r.message+=' 傷を受けずにしのいだ。';if(lampDamage)r.message+=' 灯 −'+lampDamage+'。';

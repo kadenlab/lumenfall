@@ -1,3 +1,4 @@
+import {drainMP} from '../../systems/gear-effects.ts';
 import type {EnemyConfig,ChapterContext} from '../types.ts';
 import {createFight,deal,retaliation,forecast} from './combat.ts';
 const common={scriptedBattle:true};
@@ -14,7 +15,7 @@ export function start(){fight=createFight()}
 export function damage(_c:ChapterContext,id:string,turn:number,cmd:string,base:number){return deal(fight,id,turn,cmd,base)}
 export function enemyAttack(c:ChapterContext,id:string,turn:number,cmd:string,_base:number){
  const damage=retaliation(fight,id,turn,cmd,c.battle?.phase??1);
- if(id==='hunter'&&cmd!=='fire')c.state.mp=Math.max(0,c.state.mp-3);
+ if(id==='hunter'&&cmd!=='fire')drainMP(c.state,3);
  if(id==='aurel'){
   for(const m of c.world.userData.hearths??[])m.emissiveIntensity=fight.freeze>0?.35:2.4;
   if(fight.thaw)c.burst(c.state.x,2,c.state.z,'#ffe3ab',65);

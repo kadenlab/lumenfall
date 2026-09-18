@@ -4,7 +4,7 @@ import {chapterCatalog,successors} from './catalog.ts';
 export {chapterCatalog} from './catalog.ts';
 export async function loadChapter(id:string):Promise<Chapter>{
  const metadata=chapterCatalog.find(c=>c.id===id);
- const entry=id==='trials'?{load:()=>import('../trials/chapter.ts')}:metadata;
+ const entry=id==='investigations'?{load:()=>import('../investigations/chapter.ts')}:id==='trials'?{load:()=>import('../trials/chapter.ts')}:metadata;
  if(!entry)throw Error('このチャプターはまだインストールされていません');
  const {default:chapter}=await entry.load();
  if(chapter.id!==id||!chapter.maps.length)throw Error('チャプター定義が正しくありません');
