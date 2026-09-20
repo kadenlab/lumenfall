@@ -1,3 +1,5 @@
+> 過去の実装記録です。現在の開発・build・CI手順は [README](../README.md) を参照してください。旧assetsの手動削除は現行buildでは不要です。
+
 # Chapter追加基盤の小規模整備結果
 
 基準: main `18e07b303b50ac638907c7a9bdc3f6f1a27e8f2c`。単一エージェントで実施。Chapter 5本編は未追加。

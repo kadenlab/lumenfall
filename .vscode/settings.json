@@ -1,0 +1,7 @@
+{
+  "editor.formatOnSave": false,
+  "editor.trimAutoWhitespace": true,
+  "files.trimTrailingWhitespace": true,
+  "files.exclude": {"**/.DS_Store": true},
+  "search.exclude": {"**/node_modules": true, "docs/assets": true}
+}

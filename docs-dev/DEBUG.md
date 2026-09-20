@@ -52,7 +52,7 @@ Explicit preset application asks for confirmation and replaces **only the select
 - `app/debug/presets/chapter-{1,2,3}.ts`: content-specific shortcuts.
 - `app/game.ts`: gated lazy imports, debug host, storage routing, God Mode and standard victory hook.
 - `tests/debug.test.mjs`: action/DOM tests; `package*.json`: jsdom for tests only.
-- `.github/workflows/repair-chapter3-pages.yml`: manual build from canonical `app/`; removed obsolete root-to-app copying.
+- `.github/workflows/ci.yml`: read-only validation of canonical `app/` using `npm ci` and `npm run check`; no automatic commit/push.
 - `docs/`: latest build; `README.md`, this guide.
 
 New Chapters in `chapterCatalog` automatically appear in Go. A future pack requiring special initialize/gating prerequisites needs its own debug preset adapter. Edit canonical `app/`; leftover root-level source files from historical uploads are not build inputs.

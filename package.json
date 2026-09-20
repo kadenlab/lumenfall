@@ -7,10 +7,11 @@
     "node": ">=22.18.0"
   },
   "scripts": {
-    "dev": "vite standalone --host 127.0.0.1",
+    "dev": "vite standalone --host 127.0.0.1 --port 5173 --strictPort",
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs",
-    "preview": "vite preview --outDir docs --host 127.0.0.1"
+    "preview": "vite preview --outDir docs --host 127.0.0.1 --port 4173 --strictPort",
+    "check": "npm test && npm run build && node scripts/check-project.mjs"
   },
   "dependencies": {
     "three": "0.185.1"

@@ -1,0 +1,8 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {"name":"Lumenfall: Play","type":"pwa-chrome","request":"launch","url":"http://127.0.0.1:5173/","webRoot":"${workspaceFolder}","preLaunchTask":"Lumenfall: Dev"},
+    {"name":"Lumenfall: DEBUG","type":"pwa-chrome","request":"launch","url":"http://127.0.0.1:5173/?debug=1","webRoot":"${workspaceFolder}","preLaunchTask":"Lumenfall: Dev"},
+    {"name":"Lumenfall: Editor","type":"pwa-chrome","request":"launch","url":"http://127.0.0.1:5173/?editor=1","webRoot":"${workspaceFolder}","preLaunchTask":"Lumenfall: Dev"}
+  ]
+}

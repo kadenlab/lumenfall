@@ -1,0 +1,10 @@
+{
+ "version":"2.0.0",
+ "tasks":[
+  {"label":"Lumenfall: Dev","type":"npm","script":"dev","isBackground":true,"problemMatcher":{"owner":"vite","pattern":{"regexp":"^(.+):(\\d+):(\\d+): (.*)$","file":1,"line":2,"column":3,"message":4},"background":{"activeOnStart":true,"beginsPattern":".*VITE.*","endsPattern":".*Local:.*http://127\\.0\\.0\\.1:5173/.*"}}},
+  {"label":"Lumenfall: Preview","type":"npm","script":"preview","isBackground":true,"problemMatcher":{"owner":"vite-preview","pattern":{"regexp":"^(.+):(\\d+):(\\d+): (.*)$","file":1,"line":2,"column":3,"message":4},"background":{"activeOnStart":true,"beginsPattern":".*preview.*","endsPattern":".*Local:.*http://127\\.0\\.0\\.1:4173/.*"}}},
+  {"label":"Lumenfall: Test","type":"npm","script":"test","problemMatcher":[]},
+  {"label":"Lumenfall: Build","type":"npm","script":"build","problemMatcher":[]},
+  {"label":"Lumenfall: Check","type":"npm","script":"check","problemMatcher":[],"group":{"kind":"test","isDefault":true}}
+ ]
+}

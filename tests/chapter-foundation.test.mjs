@@ -50,8 +50,9 @@ test('catalog only uses dynamic imports for story and DEBUG definitions',async()
  const debug=await readFile(new URL('../app/debug/debug.ts',import.meta.url),'utf8');assert.ok(!debug.includes("id==='chapter-"));
 });
 test('Pages rebuild never restores historical root source over app',async()=>{
- const workflow=await readFile(new URL('../.github/workflows/repair-chapter3-pages.yml',import.meta.url),'utf8');
- assert.ok(!workflow.includes('cp -R chapters'));assert.ok(!workflow.includes('rm -rf app'));assert.ok(workflow.includes('npm test'));assert.ok(workflow.includes('npm run build'));assert.ok(workflow.includes('workflow_dispatch:'));
+ const workflow=await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8');
+ assert.ok(!workflow.includes('cp -R chapters'));assert.ok(!workflow.includes('rm -rf app'));assert.ok(workflow.includes('npm run check'));assert.ok(workflow.includes('contents: read'));assert.ok(!workflow.includes('git push'));assert.ok(!workflow.includes('git commit'));
+ const pkg=JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));assert.ok(pkg.scripts.check.includes('npm test'));assert.ok(pkg.scripts.check.includes('npm run build'));
 });
 test('copyable template loads, enforces prerequisite and builds a valid spawn floor',async()=>{
  const {mkdtemp,mkdir,writeFile,rm}=await import('node:fs/promises');
