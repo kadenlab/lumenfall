@@ -18,7 +18,7 @@ export async function checkProject(directory='docs',{features=true}={}){
  const stale=names.filter(n=>!seen.has('assets/'+n));if(stale.length)throw Error('Unreferenced assets: '+stale.join(', '));
  const bundle=scripts.join('\n');
  if(features){
-  for(const ids of [['chapter-1','restore-light'],['chapter-2','missing-lights'],['chapter-3','third-light'],['chapter-4','ring-current','route:'],['trials','trial-','灯の試練'],['investigations','afterwind','灯路異変調査']])
+  for(const ids of [['chapter-1','restore-light'],['chapter-2','missing-lights'],['chapter-3','third-light'],['chapter-4','ring-current','route:'],['chapter-5','furnace-flow','part1Complete','灰に沈む灯'],['trials','trial-','灯の試練'],['investigations','afterwind','灯路異変調査']])
    for(const id of ids)if(!bundle.includes(id))throw Error('Missing production feature: '+id);
   if(/LUMENFALL_EDITOR_DEV_ONLY|lumenfall-editor-draft|TransformControls/.test(bundle)||names.some(n=>/^editor[.-]/.test(n)))throw Error('Editor leaked into production');
  }

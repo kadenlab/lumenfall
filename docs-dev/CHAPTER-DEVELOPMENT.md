@@ -1,6 +1,6 @@
 # Chapter 5〜10の追加
 
-正本は `app/chapters/catalog.ts` のChapterMetadataです。現在Chapter 5は未登録・未実装です。既存のcatalog、解放、メニュー、save、DEBUG動的読込をそのまま利用します。
+正本は `app/chapters/catalog.ts` のChapterMetadataです。現在Chapter 5 Phase 1（MAP 0〜4）は登録済みです。進行契約は `CHAPTER5-PHASE1.md` を参照してください。以下は次章追加時の雛形手順です（Chapter IDと前提を次の未登録章へ読み替えます）。既存のcatalog、解放、メニュー、save、DEBUG動的読込をそのまま利用します。
 
 1. `templates/chapter/` の4ファイルを `app/chapters/chapter-5/` にコピーし、末尾 `.template` を外す。maps/フォルダーも維持する。
 2. `__CHAPTER_ID__` を `chapter-5` に置換。

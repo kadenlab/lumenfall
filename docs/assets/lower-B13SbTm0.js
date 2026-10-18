@@ -1,0 +1,1 @@
+import{a as e,i as t,o as n,r,s as i,t as a}from"./scenery-9_QX68Iz.js";function o(o){let s=r(o);t(o,s);for(let t of[-12,12])for(let n of[-11,0,9])e(o,s,t,n,4,4);for(let e of[-14,14])i(o,s,e,0,32);for(let e of[-12,0,12])n(o,s,2,e);o.box(-5,.8,7,3,.2,1,s.wood),o.box(-5,1.05,7,.8,.3,.5,s.metal),o.cyl(6,1,4,.2,.8,s.blue),o.box(6,.5,4,.6,.2,.6,s.wood),a(o,s)}export{o as build};

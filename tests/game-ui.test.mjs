@@ -60,3 +60,20 @@ test('battle state suppresses a chapter overlay independently of its chapter imp
   await h.fight();assert.ok(h.button('test-exploration'));
  }finally{c4.modalUI=original;h.close()}
 });
+
+for(const width of [1280,390])test('C5 actual controller '+width+'px: combat, both investigations, rewards, rest, shop, save resume',async()=>{
+ const s=completed3();s.campaign.chapters['chapter-4']=createProgress();s.campaign.chapters['chapter-4'].completed=true;s.campaign.completedChapters.push('chapter-4');s.lv=14;s.hp=412;s.mp=134;
+ const h=await harness(width,'?debug=0',s);
+ try{
+  await h.click('load');await h.dialogues();await h.click('menu');await h.click('chapters');await h.click('chapter:chapter-5');await h.dialogues();
+  await h.go('ash-eater');await h.fight();assert.equal((await h.read()).campaign.chapters['chapter-5'].flags.furnaceFlash,true);
+  await h.go('city');await h.go('elna');await h.go('rest');await h.go('shop');await h.click('buy-potion');await h.click('buy-ether');await h.click('close');await h.go('letter-owner');
+  const office=async()=>{await h.go('office');await h.go('baldo');await h.go('office-record');await h.go('lower')};
+  const mine=async()=>{await h.go('conduit');await h.go('hint');await h.go('machine-wolf');await h.fight();await h.go('letter');await h.go('power');await h.go('cooling');await h.go('distribution');
+   await h.click('menu');await h.click('save');await h.click('load');await h.dialogues();assert.equal((await h.read()).campaign.chapters['chapter-5'].flags.puzzleStep,2);
+   await h.go('power');await h.go('conduit-cache');await h.go('mine');await h.go('lamp-moth');await h.fight();await h.go('mine-record');await h.go('mine-cache');await h.go('conduit');await h.go('lower')};
+  if(width===1280){await office();await mine()}else{await mine();await office()}
+  await h.go('lower-cache');await h.go('letter-owner');await h.go('elna');const result=await h.read();const p=result.campaign.chapters['chapter-5'];assert.equal(p.completed,false);assert.equal(p.flags.part1Complete,true);assert.equal(p.chests.length,3);assert.equal(p.quests['soot-letter'],'complete');assert.equal(p.defeatedEnemies.length,3);assert.ok(!result.campaign.unlockedChapters.includes('chapter-6'));
+  await h.click('menu');await h.click('load');await h.dialogues();assert.deepEqual((await h.read()).campaign.chapters['chapter-5'].flags,p.flags);assert.doesNotMatch(h.w.document.body.textContent,/CHAPTER 5 COMPLETE/);
+ }finally{h.close()}
+});

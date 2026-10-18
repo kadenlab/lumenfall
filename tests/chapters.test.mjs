@@ -61,8 +61,9 @@ test('completed old saves unlock next chapter while later installed chapters rem
 
   const choices = chapterChoices(s.campaign);
 
-  assert.equal(choices.length, 4);
+  assert.equal(choices.length, 5);
   assert.equal(choices.find(c => c.id === 'chapter-4')?.unlocked, false);
+  assert.equal(choices.find(c => c.id === 'chapter-5')?.unlocked, false);
   assert.equal(
     choices.find(c => c.id === 'chapter-2')?.unlocked,
     true

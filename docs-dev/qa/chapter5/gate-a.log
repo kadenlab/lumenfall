@@ -1,0 +1,46 @@
+✔ catalog order, IDs and prerequisites are explicit; Chapter 5 Phase 1 installed (1.1238ms)
+✔ future 6–10 metadata contract works without loading any content (0.4691ms)
+✔ catalog rejects duplicate IDs/orders and missing or cyclic prerequisites (0.2215ms)
+✔ Chapter 1 completion unlocks 2 without trials (0.1234ms)
+✔ Chapter 2 completion unlocks 3 without trials (0.0863ms)
+✔ Chapter 3 completion unlocks 4 without trials (0.0971ms)
+✔ chapter-1 lazy load matches metadata and debug definition (37.7112ms)
+✔ chapter-1 cleared map travel and reload preserve progress and player inventory (9.7657ms)
+✔ chapter-2 lazy load matches metadata and debug definition (13.1628ms)
+✔ chapter-2 cleared map travel and reload preserve progress and player inventory (9.6661ms)
+✔ chapter-3 lazy load matches metadata and debug definition (16.1665ms)
+✔ chapter-3 cleared map travel and reload preserve progress and player inventory (12.3114ms)
+✔ chapter-4 lazy load matches metadata and debug definition (12.7418ms)
+✔ chapter-4 cleared map travel and reload preserve progress and player inventory (15.363ms)
+✔ chapter-5 lazy load matches metadata and debug definition (4.0375ms)
+✔ chapter-5 cleared map travel and reload preserve progress and player inventory (6.7324ms)
+✔ catalog only uses dynamic imports for story and DEBUG definitions (7.1703ms)
+✔ Pages rebuild never restores historical root source over app (0.8022ms)
+✔ copyable template loads, enforces prerequisite and builds a valid spawn floor (14.88ms)
+✔ C5 requires formal C4 completion, not boss defeat or stale unlock (0.8893ms)
+✔ C4 old save unlocks C5 additively with existing chapters, equipment and inventory intact (1.2328ms)
+✔ C5 map 0 loads, Editor displays placements, DEBUG and saved spawn are valid (7.999ms)
+✔ C5 map 1 loads, Editor displays placements, DEBUG and saved spawn are valid (2.3657ms)
+✔ C5 map 2 loads, Editor displays placements, DEBUG and saved spawn are valid (2.6544ms)
+✔ C5 map 3 loads, Editor displays placements, DEBUG and saved spawn are valid (2.5235ms)
+✔ C5 map 4 loads, Editor displays placements, DEBUG and saved spawn are valid (2.2196ms)
+✔ Editor requires development and explicit editor=1; entry import is DEV guarded (3.6647ms)
+✔ Editor coordinate validation is atomic and movement snaps X/Z (1.0619ms)
+✔ Draft add/delete unique IDs and existing removal confirmation (0.391ms)
+✔ JSON export strips helpers and TS preserves placement metadata without executable names (0.4497ms)
+✔ Editor storage never touches normal or DEBUG saves; malformed drafts rejected (0.2531ms)
+✔ Editor scenery adapter: all chapter-1 maps load without game storage (44.928ms)
+✔ Editor scenery adapter: all chapter-2 maps load without game storage (45.9957ms)
+✔ Editor scenery adapter: all chapter-3 maps load without game storage (40.1931ms)
+✔ Editor scenery adapter: all chapter-4 maps load without game storage (44.145ms)
+✔ Editor scenery adapter: all chapter-5 maps load without game storage (14.3026ms)
+✔ Editor scenery adapter: all trials maps load without game storage (5.9176ms)
+✔ Editor scenery adapter: all investigations maps load without game storage (17.902ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 413.9089

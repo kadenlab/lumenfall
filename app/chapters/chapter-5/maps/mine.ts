@@ -1,0 +1,4 @@
+import type {ChapterContext} from '../../types.ts';
+import {foundation,lamp,finish} from './scenery.ts';
+export function build(c:ChapterContext){const m=foundation(c);for(const z of [-12,-4,4,12]){for(const x of [-11,11]){const post=c.box(x,2.3,z,.55,4.6,.6,m.wood);post.rotation.z=x<0?.06:-.06}c.box(0,4.8,z,23,.5,.6,m.wood)}for(const x of [-1.3,1.3])c.box(x,.14,0,.13,.15,34,m.metal);for(let z=-15;z<18;z+=3)c.box(0,.11,z,4,.12,.35,m.wood,false);
+ c.box(-8,.7,4,3,1.4,3,m.dark);c.box(-8,1.45,4,3.1,.15,3.1,m.ash);c.blocks.push({x:-8,z:4,w:3.2,d:3.2});c.box(0,2,-19,10,4,1,m.dark);for(const x of [-3,0,3]){const brace=c.box(x,2,-18.4,.3,4.5,.3,m.wood);brace.rotation.z=.4}for(const z of [-10,0,10])lamp(c,m,9,z,true);for(const x of [-7,-5,-3]){c.cyl(x,.6,-9,.35,1.2,m.metal);c.cyl(x,1.35,-9,.18,.3,m.blue)}finish(c,m)}

@@ -8,14 +8,14 @@ import {progress} from '../app/systems/progression.ts';
 import {migrateChapterUnlocks,canAccessChapter} from '../app/systems/chapter-unlocks.ts';
 import {encode,decode,SAVE_VERSION} from '../app/systems/save.ts';
 import {presets,travel} from '../app/debug/debug-actions.ts';
-test('catalog order, IDs and prerequisites are explicit; no Chapter 5 installed',()=>{
- assert.deepEqual(chapterCatalog.map(c=>c.id),[1,2,3,4].map(n=>'chapter-'+n));
- assert.deepEqual(chapterCatalog.map(c=>c.order),[1,2,3,4]);
+test('catalog order, IDs and prerequisites are explicit; Chapter 5 Phase 1 installed',()=>{
+ assert.deepEqual(chapterCatalog.map(c=>c.id),[1,2,3,4,5].map(n=>'chapter-'+n));
+ assert.deepEqual(chapterCatalog.map(c=>c.order),[1,2,3,4,5]);
  assert.deepEqual(ancestors('chapter-4'),['chapter-1','chapter-2','chapter-3']);
  assert.ok(!ancestors('chapter-4').includes('trials'));
 });
-test('future 5–10 metadata contract works without loading any content',()=>{
- let loads=0;const future=Array.from({length:6},(_,i)=>({...chapterCatalog[3],id:'chapter-'+(i+5),order:i+5,requires:'chapter-'+(i+4),load:()=>{loads++;throw Error('must stay lazy')}}));
+test('future 6–10 metadata contract works without loading any content',()=>{
+ let loads=0;const future=Array.from({length:5},(_,i)=>({...chapterCatalog[3],id:'chapter-'+(i+6),order:i+6,requires:'chapter-'+(i+5),load:()=>{loads++;throw Error('must stay lazy')}}));
  const catalog=defineCatalog([...future.reverse(),...chapterCatalog]);
  assert.deepEqual(successors('chapter-4',catalog),['chapter-5']);
  assert.equal(ancestors('chapter-10',catalog).length,9);assert.equal(loads,0);

@@ -1,0 +1,319 @@
+
+> lumenfall@1.5.0-rc.1 check
+> npm test && npm run build && node scripts/check-project.mjs
+
+
+> lumenfall@1.5.0-rc.1 test
+> node --test tests/*.test.mjs
+
+✔ catalog order, IDs and prerequisites are explicit; Chapter 5 Phase 1 installed (2.3784ms)
+✔ future 6–10 metadata contract works without loading any content (1.4218ms)
+✔ catalog rejects duplicate IDs/orders and missing or cyclic prerequisites (0.511ms)
+✔ Chapter 1 completion unlocks 2 without trials (0.2624ms)
+✔ Chapter 2 completion unlocks 3 without trials (0.1733ms)
+✔ Chapter 3 completion unlocks 4 without trials (0.2135ms)
+✔ chapter-1 lazy load matches metadata and debug definition (133.388ms)
+✔ chapter-1 cleared map travel and reload preserve progress and player inventory (24.4593ms)
+✔ chapter-2 lazy load matches metadata and debug definition (32.5788ms)
+✔ chapter-2 cleared map travel and reload preserve progress and player inventory (29.8705ms)
+✔ chapter-3 lazy load matches metadata and debug definition (39.4468ms)
+✔ chapter-3 cleared map travel and reload preserve progress and player inventory (30.9023ms)
+✔ chapter-4 lazy load matches metadata and debug definition (24.9909ms)
+✔ chapter-4 cleared map travel and reload preserve progress and player inventory (34.5505ms)
+✔ chapter-5 lazy load matches metadata and debug definition (31.964ms)
+✔ chapter-5 cleared map travel and reload preserve progress and player inventory (33.2988ms)
+✔ catalog only uses dynamic imports for story and DEBUG definitions (12.2219ms)
+✔ Pages rebuild never restores historical root source over app (2.3935ms)
+✔ copyable template loads, enforces prerequisite and builds a valid spawn floor (28.565ms)
+✔ Chapter 2 cannot be selected before Chapter 1 clear; prior progress survives round trip (6.0927ms)
+✔ all Chapter 2 entrypoints are lazy modules and spawns are on valid floors (127.4296ms)
+✔ sea and unlit gates are impassable, illuminated routes become reachable (10.6282ms)
+✔ investigation requires three clues and supplies are granted only once (1.2849ms)
+✔ wrong beacon order cannot open bridge; correct order persists and rewards cannot duplicate (1.462ms)
+✔ midboss opens choir without clearing chapter; final boss clears and unlocks Chapter 3 (0.642ms)
+✔ enemy traits and the relight mechanic reward informed command choices (0.4428ms)
+✔ Chapter 3 unlock migrates official old clears without losing trial/player fields (4.472ms)
+✔ incomplete Chapter 2 cannot enter Chapter 3 even through a forged unlock (0.9748ms)
+✔ all five maps load lazily and every interaction is reachable with real scenery collisions (144.7682ms)
+✔ gate, evidence and two sanctuary lamps enforce story order (1.5742ms)
+✔ supplies and treasure grants are idempotent across saves (1.8804ms)
+✔ shield telegraph rewards fire break or waiting and mist never causes guaranteed misses (0.8632ms)
+✔ freezing can be thawed by fire and avalanche warns two actions ahead (0.5232ms)
+✔ frost is beatable without accessories at Chapter 2 clear level (0.8453ms)
+✔ soldier is beatable without accessories at Chapter 2 clear level (0.435ms)
+✔ shade is beatable without accessories at Chapter 2 clear level (0.6394ms)
+✔ hunter is beatable without accessories at Chapter 2 clear level (0.3613ms)
+✔ warden is beatable without accessories at Chapter 2 clear level (0.2799ms)
+✔ aurel is beatable without accessories at Chapter 2 clear level (0.2944ms)
+✔ accessories stay effective in Chapter 3 and survive round trips (1.9169ms)
+✔ boss survives as dialogue, ending completes and chapter clear persists (1.2566ms)
+✔ phase change cannot trigger an avalanche without two preparation selections (0.2334ms)
+✔ furnace blocks the whole plinth and rescues old saves without losing progress (1.3397ms)
+✔ post-boss conversation is reachable outside the plinth with extended range (5.177ms)
+✔ C3 old clear unlocks C4 additively; no trial clear required; formal fields reconcile (4.6288ms)
+✔ C3 incomplete and boss-only cannot unlock C4 (0.8339ms)
+✔ C4 環海入口: load, spawn, every interaction reachable and bounded scenery (62.4831ms)
+✔ C4 無響の港: load, spawn, every interaction reachable and bounded scenery (37.9719ms)
+✔ C4 西環島: load, spawn, every interaction reachable and bounded scenery (26.3484ms)
+✔ C4 東環島: load, spawn, every interaction reachable and bounded scenery (22.054ms)
+✔ C4 環状遺跡: load, spawn, every interaction reachable and bounded scenery (23.6846ms)
+✔ C4 沈灯回廊: load, spawn, every interaction reachable and bounded scenery (17.9415ms)
+✔ C4 中央祭壇: load, spawn, every interaction reachable and bounded scenery (18.8372ms)
+✔ C4 環海の心臓: load, spawn, every interaction reachable and bounded scenery (16.6224ms)
+✔ C4 full chapter event route both islands, boss victory, ending and reload (9.2314ms)
+✔ all six treasures and both subquests grant once, survive save and do not gate main (1.564ms)
+✔ three lamps stop for bounded turns with cooldown and cannot repeat; phase two increases interval (0.3209ms)
+✔ biter balanced without accessories and repeatable after defeat (0.8749ms)
+✔ jelly balanced without accessories and repeatable after defeat (0.4319ms)
+✔ shell balanced without accessories and repeatable after defeat (1.0307ms)
+✔ ray balanced without accessories and repeatable after defeat (0.9263ms)
+✔ seawarden balanced without accessories and repeatable after defeat (0.2721ms)
+✔ ignas balanced without accessories and repeatable after defeat (0.3705ms)
+✔ biter-2 balanced without accessories and repeatable after defeat (0.3417ms)
+✔ jelly-2 balanced without accessories and repeatable after defeat (0.3214ms)
+✔ shell-2 balanced without accessories and repeatable after defeat (0.2592ms)
+✔ ray-2 balanced without accessories and repeatable after defeat (0.2317ms)
+✔ accessory stats, regen and two slots remain effective; optional C4 gear does not replace them (1.0145ms)
+✔ cleared debug travel to every map preserves story fields and normal storage (109.6365ms)
+✔ startup import/missing chapter/map failures and corrupt JSON never write fresh over saves (1.3786ms)
+✔ failed installation rolls back state and leaves persisted bytes untouched (0.2886ms)
+✔ batching does not discard texture/alphaTest or custom shader material differences (1.2527ms)
+✔ C5 requires formal C4 completion, not boss defeat or stale unlock (1.773ms)
+✔ C4 old save unlocks C5 additively with existing chapters, equipment and inventory intact (2.5031ms)
+✔ C5 map 0 loads, Editor displays placements, DEBUG and saved spawn are valid (42.0065ms)
+✔ C5 map 1 loads, Editor displays placements, DEBUG and saved spawn are valid (27.483ms)
+✔ C5 map 2 loads, Editor displays placements, DEBUG and saved spawn are valid (10.608ms)
+✔ C5 map 3 loads, Editor displays placements, DEBUG and saved spawn are valid (12.9062ms)
+✔ C5 map 4 loads, Editor displays placements, DEBUG and saved spawn are valid (7.5382ms)
+✔ C5 puzzle resets safely, saves intermediate steps and permanently opens mine (1.5336ms)
+✔ C5 investigation order 2 → 4 converges without clearing chapter (0.8944ms)
+✔ C5 investigation order 4 → 2 converges without clearing chapter (0.6846ms)
+✔ C5 main does not require optional letter; letter acquired before request still rewards only once (0.4094ms)
+✔ C5 灰降りの街道 every NPC/enemy/exit/chest reachable after required gates; scenery bounded (13.1767ms)
+✔ C5 グランヴェル下層区 every NPC/enemy/exit/chest reachable after required gates; scenery bounded (45.2928ms)
+✔ C5 上層区・炉政庁 every NPC/enemy/exit/chest reachable after required gates; scenery bounded (11.2488ms)
+✔ C5 地下送灯路 every NPC/enemy/exit/chest reachable after required gates; scenery bounded (19.5065ms)
+✔ C5 廃灰坑道 every NPC/enemy/exit/chest reachable after required gates; scenery bounded (16.8902ms)
+✔ C5 three treasure IDs award exactly once and survive reload (0.7384ms)
+✔ C5 enemy placement IDs exactly match definitions and ordinary turn combat is winnable (1.2519ms)
+✔ C5 moth drain respects resistance and starfire; wolf telegraph matches attack turn (0.646ms)
+✔ C5 artificial Cleared remains DEBUG only; Part 1 End is incomplete (0.8242ms)
+✔ v1 migration keeps player, inventory, seal, quest, chest and encounter progress (3.2968ms)
+✔ completed old saves unlock next chapter while later installed chapters remain locked (0.6982ms)
+✔ old invalid ruin position is relocated; future save versions are rejected (1.8434ms)
+✔ writing migrated record preserves untouched legacy backup (0.5362ms)
+✔ switch retains each chapter state and does not mutate live state before loading (0.6516ms)
+✔ chapter registry loads installed content and rejects unknown chapters; map entrypoints remain separate (59.0222ms)
+✔ seal action opens gate only after correct answer and guardian; chest rewards once (0.9618ms)
+✔ debug is explicit and query zero overrides stored opt-in (0.8083ms)
+✔ debug save forks normal/legacy save and never writes or deletes the original (0.9135ms)
+✔ chapter teleport bypasses locks only in cloned debug campaign (141.0849ms)
+✔ all presets and all map spawns are valid; Before Boss works after Cleared (51.2083ms)
+✔ HP MP items level and XP modifications are bounded and serializable (0.4998ms)
+✔ flag editor validates scalar flags and preserves other chapters and inventory (0.7127ms)
+✔ reset current chapter retains other chapters, trials, equipment, player; normal migrations unchanged (0.5489ms)
+✔ god mode keeps HP alive in trial turns but does not bypass lamp failure (0.5761ms)
+✔ normal entry only lazy-loads debug UI behind explicit gate; instant win uses victory (4.356ms)
+✔ DOM panel ON/OFF, chapter/map teleport, supplies, flags, save, and confirmed reset (81.8525ms)
+✔ VS Code launch targets and background readiness match fixed npm ports (7.1889ms)
+✔ both side corridors and their guardians are reachable before unlocking (33.4661ms)
+✔ boss cannot be reached with zero or one seal, including by going around outer walls (22.1327ms)
+✔ both seals open a route to the spring and boss (20.5654ms)
+✔ duplicate seal does not open the gate; completed saves remain traversable (0.2311ms)
+✔ Editor requires development and explicit editor=1; entry import is DEV guarded (18.1567ms)
+✔ Editor coordinate validation is atomic and movement snaps X/Z (2.0599ms)
+✔ Draft add/delete unique IDs and existing removal confirmation (0.9348ms)
+✔ JSON export strips helpers and TS preserves placement metadata without executable names (0.8514ms)
+✔ Editor storage never touches normal or DEBUG saves; malformed drafts rejected (0.4598ms)
+✔ Editor scenery adapter: all chapter-1 maps load without game storage (117.8474ms)
+✔ Editor scenery adapter: all chapter-2 maps load without game storage (95.7435ms)
+✔ Editor scenery adapter: all chapter-3 maps load without game storage (73.0446ms)
+✔ Editor scenery adapter: all chapter-4 maps load without game storage (63.1343ms)
+✔ Editor scenery adapter: all chapter-5 maps load without game storage (32.0645ms)
+✔ Editor scenery adapter: all trials maps load without game storage (7.633ms)
+✔ Editor scenery adapter: all investigations maps load without game storage (20.5102ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+(node:15860) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ actual controller UI: C3 old save to complete C4 via walking/dialogue/commands; saves and revisits (1439.4915ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ actual controller mobile input: keyboard, pointer auto-walk, joystick release, debug query off (96.4653ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ actual controller restores old chapter after map build throws without saving new state (42.3744ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ actual controller preserves C3 ending callbacks across city transition and saves C4 unlock (139.6752ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ actual controller new game is unchanged; C4 remains locked (33.0452ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ actual mobile battle UI consumes switch turn, enforces cooldown, defeat returns safely and retries (174.4777ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ actual shop and gear UI preserve two accessories and save selected equipment (61.8759ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ actual controller same-chapter map build failure keeps position, progress, save and permits retry (70.3902ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ battle hides exploration DOM and world navigation, then restores on victory (70.4821ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ battle state suppresses a chapter overlay independently of its chapter implementation (74.4194ms)
+THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+✔ C5 actual controller 1280px: combat, both investigations, rewards, rest, shop, save resume (696.6872ms)
+✔ C5 actual controller 390px: combat, both investigations, rewards, rest, shop, save resume (685.4754ms)
+✔ joystick stops on release outside, capture loss, cancellation, blur and hide (4.0061ms)
+✔ investigations require formal Chapter 4 completion, not trials or injected unlock flag (64.4026ms)
+✔ old C4 save with no investigation data unlocks additively without resetting player/story/trials (2.3593ms)
+✔ unlock introduction is one-time and survives reload (0.6548ms)
+✔ 風に偏る灯: clues, initial reward, repeat and idempotent payout (0.7938ms)
+✔ 風に偏る灯: debug boss shortcut and scene load leave main records untouched (39.8153ms)
+✔ 沈まない残響: clues, initial reward, repeat and idempotent payout (0.3018ms)
+✔ 沈まない残響: debug boss shortcut and scene load leave main records untouched (31.1629ms)
+✔ 凍てつく逆流: clues, initial reward, repeat and idempotent payout (0.2454ms)
+✔ 凍てつく逆流: debug boss shortcut and scene load leave main records untouched (32.2257ms)
+✔ 切断灯路の残響: clues, initial reward, repeat and idempotent payout (0.2633ms)
+✔ 切断灯路の残響: debug boss shortcut and scene load leave main records untouched (26.8876ms)
+✔ four first clears from Lv14 stay within 0.8–1.2 levels, preserve main progress (0.3856ms)
+✔ four first clears from Lv15 stay within 0.8–1.2 levels, preserve main progress (0.1809ms)
+✔ DEBUG save persists investigation but leaves normal save bytes unchanged; failed load preserves save (1.5147ms)
+✔ wind guard, execute and once-per-battle resonance are bounded and reset (0.2274ms)
+✔ tidelight MP resistance and victory recovery never exceed max or revive (0.1071ms)
+✔ wind can evade swords but light strips guard; threats remain visible (0.2568ms)
+✔ echo MP siphon buffs next attack, frost charges and ring switching stays turn-based (0.1389ms)
+✔ all four fights can be beaten at Lv14 with standard gear and no trial accessories (0.4194ms)
+✔ all four fights can be beaten at Lv15 with standard gear and no trial accessories (0.1277ms)
+✔ new gear mitigation works through trial turn rules without modifying lamp or no-heal rules (2.091ms)
+✔ 4K and high-DPI screens stay inside the rendering pixel budget (1.1799ms)
+✔ adaptive quality reacts to sustained load and does not oscillate (0.366ms)
+✔ batching preserves triangle positions, bounds and dynamic meshes (10.6025ms)
+✔ fountain uses 16 vertices and no reflection; river retains detail (0.3261ms)
+✔ build reference checker follows template imports and rejects missing/stale chunks (59.5453ms)
+✔ stable save fixture roundtrip: new (3.4824ms)
+✔ stable save fixture roundtrip: chapter-1 (90.9909ms)
+✔ stable save fixture roundtrip: chapter-2 (33.0199ms)
+✔ stable save fixture roundtrip: chapter-3 (32.9638ms)
+✔ stable save fixture roundtrip: chapter-4 (27.5383ms)
+✔ stable save fixture roundtrip: trials (1.0736ms)
+✔ stable save fixture roundtrip: gear (0.9579ms)
+✔ stable save fixture roundtrip: investigations-progress (0.9278ms)
+✔ stable save fixture roundtrip: investigations-complete (1.3166ms)
+✔ legacy Chapter 3 completion without investigation/gear namespaces preserves story and inventory (0.7813ms)
+✔ old incomplete save remains locked even with a forged new unlock field (2.7876ms)
+✔ old Chapter 2 complete save migrates without resetting any existing field (1.2149ms)
+✔ official false completion prevents early boss flag unlock; legacy corroboration only without formal field (0.3025ms)
+✔ unlock notice occurs once and remains acknowledged after encode/decode (0.5495ms)
+✔ rewards unlock sequentially, grant once, and retain best records (0.6673ms)
+✔ two accessory slots, duplicates blocked, 8 percent effects and HP cap persist (0.9382ms)
+✔ eternal heals 3 percent at live turn start, never above cap or from zero; no-heal suppresses it (0.3246ms)
+✔ lamp defense reduces lamp damage and zero lamp is a special loss (0.5436ms)
+✔ mist reveal lasts three subsequent command selections; unavailable commands are rejected (0.4139ms)
+✔ no-heal blocks all recovery and preserves HP across three waves (0.363ms)
+✔ trial 1 is winnable at Chapter 2 clear level without random evasion (0.5275ms)
+✔ trial 2 is winnable at Chapter 2 clear level without random evasion (0.4685ms)
+✔ trial 3 is winnable at Chapter 2 clear level without random evasion (0.1375ms)
+✔ trial 4 is winnable at Chapter 2 clear level without random evasion (0.1387ms)
+✔ trial 5 is winnable at Chapter 2 clear level without random evasion (0.2116ms)
+✔ defeated enemies disappear from trial HP text and target commands (8.2728ms)
+✔ fourth trial replaces each defeated foe without retaining its HP or name (0.5242ms)
+✔ fourth trial punishes sword spam but telegraphed guarding is survivable (0.2884ms)
+ℹ tests 193
+ℹ suites 0
+ℹ pass 193
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4865.9393
+
+> lumenfall@1.5.0-rc.1 build
+> node scripts/build.mjs
+
+vite v8.0.13 building client environment for production...
+[2K
+transforming...✓ 142 modules transformed.
+rendering chunks...
+computing gzip size...
+docs/index.html                            1.95 kB │ gzip:   0.89 kB
+docs/assets/debug-style-ZFsRFz_w.css       1.19 kB │ gzip:   0.54 kB
+docs/assets/index-CvvmK3nJ.css            17.49 kB │ gzip:   4.51 kB
+docs/assets/object-config-CcKrhgtQ.js      0.11 kB │ gzip:   0.10 kB
+docs/assets/object-config-DUOneR5p.js      0.11 kB │ gzip:   0.10 kB
+docs/assets/object-config-tkJ0pxrg2.js     0.11 kB │ gzip:   0.10 kB
+docs/assets/object-config-CHHQfXrQ.js      0.11 kB │ gzip:   0.11 kB
+docs/assets/object-config-tpVMAphW.js      0.13 kB │ gzip:   0.12 kB
+docs/assets/chunk-DtRyYLXJ.js              0.15 kB │ gzip:   0.15 kB
+docs/assets/chapter-access-OK5e-fq9.js     0.28 kB │ gzip:   0.17 kB
+docs/assets/entrance-DDLiPZA4.js           0.28 kB │ gzip:   0.22 kB
+docs/assets/altar-CxOvuFQ_.js              0.30 kB │ gzip:   0.23 kB
+docs/assets/west-q7GeSxrm.js               0.32 kB │ gzip:   0.25 kB
+docs/assets/east-BIXOBbN6.js               0.33 kB │ gzip:   0.25 kB
+docs/assets/lower-B13SbTm0.js              0.37 kB │ gzip:   0.25 kB
+docs/assets/gate-C2-E-tJq.js               0.38 kB │ gzip:   0.22 kB
+docs/assets/debug-actions-Bi4CK8kK.js      0.41 kB │ gzip:   0.24 kB
+docs/assets/office-CBpT8MOG.js             0.45 kB │ gzip:   0.29 kB
+docs/assets/chapel-BP2cX7MK.js             0.48 kB │ gzip:   0.32 kB
+docs/assets/ruins-9cFp_IZA.js              0.48 kB │ gzip:   0.33 kB
+docs/assets/village-EhCIkvvF.js            0.49 kB │ gzip:   0.30 kB
+docs/assets/road-CmFpbmQB.js               0.51 kB │ gzip:   0.33 kB
+docs/assets/corridor-s7tggkoW.js           0.52 kB │ gzip:   0.32 kB
+docs/assets/harbor-DtrNaQZC.js             0.55 kB │ gzip:   0.37 kB
+docs/assets/terrain-x_OiMAXk.js            0.56 kB │ gzip:   0.30 kB
+docs/assets/snowfield-D8yFL2-C.js          0.56 kB │ gzip:   0.39 kB
+docs/assets/coast-D_uBIKoC.js              0.57 kB │ gzip:   0.44 kB
+docs/assets/harbor-YHT-v0TO.js             0.62 kB │ gzip:   0.44 kB
+docs/assets/terrain-BcPf_sAM.js            0.69 kB │ gzip:   0.37 kB
+docs/assets/choir-Dha0R5qG.js              0.69 kB │ gzip:   0.47 kB
+docs/assets/mine-1n_qu1Gp.js               0.70 kB │ gzip:   0.41 kB
+docs/assets/progression-D5Vxb0T4.js        0.76 kB │ gzip:   0.33 kB
+docs/assets/cathedral-Dd77isXK.js          0.76 kB │ gzip:   0.47 kB
+docs/assets/debug-CZIy27Ax.js              0.77 kB │ gzip:   0.45 kB
+docs/assets/conduit-DtWgWbK-.js            0.78 kB │ gzip:   0.48 kB
+docs/assets/gear-effects-Dq5V5_yt.js       0.81 kB │ gzip:   0.42 kB
+docs/assets/dungeon-CZ0kFq2h.js            0.84 kB │ gzip:   0.46 kB
+docs/assets/rewards-Dgf41LKk.js            0.88 kB │ gzip:   0.52 kB
+docs/assets/heart-VFw6uyIR.js              0.90 kB │ gzip:   0.57 kB
+docs/assets/terrain-CmzIwg9o.js            0.91 kB │ gzip:   0.47 kB
+docs/assets/state-bagzpWps.js              0.95 kB │ gzip:   0.54 kB
+docs/assets/debug-DDTQnQYv.js              0.95 kB │ gzip:   0.59 kB
+docs/assets/chapter-1-Bomtp5Iz.js          1.09 kB │ gzip:   0.62 kB
+docs/assets/preload-helper-CP_bqw3T.js     1.20 kB │ gzip:   0.68 kB
+docs/assets/chapter-4-D9yyYysn.js          1.22 kB │ gzip:   0.58 kB
+docs/assets/chapter-2-33nWyYyK.js          1.24 kB │ gzip:   0.59 kB
+docs/assets/furnace-DP6xRQHN.js            1.30 kB │ gzip:   0.74 kB
+docs/assets/field-CxlwUWFp.js              1.32 kB │ gzip:   0.76 kB
+docs/assets/map-DtXtmNwd.js                1.33 kB │ gzip:   0.77 kB
+docs/assets/chapter-3-xtNGwdjA.js          1.57 kB │ gzip:   0.70 kB
+docs/assets/city-DmMnqmvS.js               1.88 kB │ gzip:   1.00 kB
+docs/assets/town-C8SXaqzU.js               2.02 kB │ gzip:   1.07 kB
+docs/assets/gear-B8CK3qS3.js               2.16 kB │ gzip:   1.08 kB
+docs/assets/object-config-BiUGbLb2.js      2.25 kB │ gzip:   1.30 kB
+docs/assets/object-config-Dh68zJNJ.js      2.59 kB │ gzip:   1.33 kB
+docs/assets/state-C9dvd7XY.js              2.68 kB │ gzip:   1.34 kB
+docs/assets/chapter-IgiYUqtM.js            2.69 kB │ gzip:   1.66 kB
+docs/assets/scenery-CG0czUGJ.js            3.19 kB │ gzip:   1.59 kB
+docs/assets/object-config-p_XG2Gid.js      3.23 kB │ gzip:   1.44 kB
+docs/assets/state-DWm-2v0V.js              3.45 kB │ gzip:   1.85 kB
+docs/assets/object-config-DE9c0GAJ.js      3.48 kB │ gzip:   1.52 kB
+docs/assets/dungeon-DnCXCrzG.js            3.58 kB │ gzip:   1.78 kB
+docs/assets/object-config-BKAiZYvE.js      3.66 kB │ gzip:   1.75 kB
+docs/assets/scenery-BO6BkVsU.js            3.74 kB │ gzip:   1.79 kB
+docs/assets/save-BqHlBEx0.js               3.78 kB │ gzip:   1.68 kB
+docs/assets/scenery-9_QX68Iz.js            4.05 kB │ gzip:   2.17 kB
+docs/assets/scenery-DrWjZuei.js            4.15 kB │ gzip:   2.14 kB
+docs/assets/registry-DqVz54QM.js           4.18 kB │ gzip:   1.69 kB
+docs/assets/debug-actions-CoT4EzAw.js      4.50 kB │ gzip:   1.99 kB
+docs/assets/rules-D-UgKMDX.js              5.80 kB │ gzip:   2.92 kB
+docs/assets/debug-BkYCeH_-.js              7.35 kB │ gzip:   3.40 kB
+docs/assets/chapter-vWNDrrFj.js           10.61 kB │ gzip:   5.40 kB
+docs/assets/chapter-config-BShBetjZ.js    13.62 kB │ gzip:   6.24 kB
+docs/assets/chapter-config-Be6AnfGp.js    16.60 kB │ gzip:   7.54 kB
+docs/assets/chapter-config-cRCrGnL_.js    23.83 kB │ gzip:  10.39 kB
+docs/assets/chapter-config-C4rbmgb32.js   24.55 kB │ gzip:  10.66 kB
+docs/assets/chapter-config-DADiYKSd.js    24.62 kB │ gzip:  10.73 kB
+docs/assets/index-B11hlSln.js             75.79 kB │ gzip:  28.72 kB
+docs/assets/three.module-BkYRkxE7.js     543.55 kB │ gzip: 135.95 kB
+
+✓ built in 265ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+Project checks OK: { assets: 78, files: 79 }
